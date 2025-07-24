@@ -1,50 +1,93 @@
-# Welcome to your Expo app 👋
+# pyokemon-mobile-admin
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+포켓몬 관리자 모바일 애플리케이션 - Expo 기반 React Native 프로젝트
 
-## Get started
+## 시작하기
 
-1. Install dependencies
+1. 의존성 설치
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. 개발 서버 실행
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## 개발 환경
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- [Expo](https://expo.dev) 프레임워크
+- React Native 0.79.5
+- TypeScript
+- React Navigation (expo-router)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 프로젝트 구조
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+pyokemon-mobile-admin/
+  ├── app/                # 앱 화면 (expo-router 기반 파일 라우팅)
+  ├── assets/             # 이미지, 폰트 등 정적 자산
+  ├── components/         # 재사용 가능한 컴포넌트
+  │   ├── common/         # 공통 컴포넌트
+  │   ├── feature/        # 기능별 컴포넌트
+  │   └── ui/             # 기본 UI 컴포넌트
+  ├── constants/          # 상수 정의
+  ├── hooks/              # 커스텀 훅
+  ├── services/           # API 및 서비스 로직
+  ├── store/              # 상태 관리
+  ├── types/              # 타입 정의
+  └── utils/              # 유틸리티 함수
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 개발자 가이드
 
-## Learn more
+개발자를 위한 상세 가이드는 다음 문서를 참조하세요:
 
-To learn more about developing your project with Expo, look at the following resources:
+- [개발 환경 설정](.guide/setup.md)
+- [코드 스타일 가이드](.guide/code-style.md)
+- [테스트 가이드](.guide/testing.md)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 주요 기능
 
-## Join the community
+- 포켓몬 데이터 관리
+- 사용자 관리
+- 대시보드 및 통계
 
-Join our community of developers creating universal apps.
+## 스크립트
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+# 개발 서버 시작
+npm start
+
+# iOS 시뮬레이터로 실행
+npm run ios
+
+# Android 에뮬레이터로 실행
+npm run android
+
+# 프로젝트 초기화 (예제 코드 이동)
+npm run reset-project
+
+# 린트 검사
+npm run lint
+```
+
+## 배포
+
+Expo EAS를 사용하여 앱을 빌드하고 배포합니다:
+
+```bash
+# EAS CLI 설치
+npm install -g eas-cli
+
+# 빌드 구성
+eas build:configure
+
+# 개발 빌드
+eas build --profile development
+
+# 프로덕션 빌드
+eas build --platform all
+```

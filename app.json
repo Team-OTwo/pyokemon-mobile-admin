@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "PyokemonAdmin",
-    "slug": "PyokemonAdmin",
+    "name": "pyokemon-mobile-admin",
+    "slug": "pyokemon-mobile-admin",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "pyokemonadmin",
+    "scheme": "pyokemon-mobile-admin",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
