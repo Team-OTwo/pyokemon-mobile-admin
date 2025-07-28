@@ -6,11 +6,12 @@ interface ButtonProps {
   textColor?: string;
   borderColor?: string;
   backgroundColor?:string;
+  onPress?:()=>void;
 }
 
-const CustomButton = ({ text, textColor="#222", borderColor="#FFCF36", backgroundColor="#FFCF36" }: ButtonProps) => {
+const CustomButton = ({ text, textColor="#222", borderColor="#FFCF36", backgroundColor="#FFCF36", onPress }: ButtonProps) => {
   return (
-    <TouchableOpacity style={[styles.button, { borderColor: borderColor, backgroundColor:backgroundColor }]}>
+    <TouchableOpacity style={[styles.button, { borderColor: borderColor, backgroundColor:backgroundColor }]} onPress={onPress}>
       <Text style={[styles.text, { color: textColor }]}>{text}</Text>
     </TouchableOpacity>
   );
