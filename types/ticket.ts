@@ -3,7 +3,9 @@ export type Ticket = {
   title: string;
   date: string;
   venue: string;
-  issuer: string;
-  status: "입장중" | "입장전";
+  status: "입장" | "실패";
   genre: string;
+  enterTime:string;
+  name:string;
+  seat:string;
 };
