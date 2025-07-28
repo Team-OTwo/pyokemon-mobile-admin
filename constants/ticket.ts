@@ -1,10 +1,82 @@
-export const myTicket = {
+import { Ticket } from "@/types/ticket"
+
+export const ticket:Ticket = {
+    id: "1",
+    title: "뮤지컬 라이온 킹",
+    date: "2023.12.15(수) 19:30",
+    venue: "샤롯데 씨어터",
+    status:"입장",
+    genre: "콘서트",
+    enterTime:"05.15 18:23",
+    name:"홍길동1",
+    seat:"33구역 A-4",
+}
+
+export const tickets:Ticket[] = [
+  {
+    id: "2",
+    title: "뮤지컬 라이온 킹",
+    date: "2023.12.15(수) 19:30",
+    venue: "샤롯데 씨어터",
+    status:"실패",
+    genre: "콘서트",
+    enterTime:"05.15 18:23",
+    name:"홍길동2",
+    seat:"33구역 A-4",
+},
+{
+    id: "3",
+    title: "뮤지컬 라이온 킹",
+    date: "2023.12.15(수) 19:30",
+    venue: "샤롯데 씨어터",
+    status:"입장",
+    genre: "콘서트",
+    enterTime:"05.15 18:23",
+    name:"홍길동3",
+    seat:"33구역 A-4",
+},
+{
+    id: "4",
+    title: "뮤지컬 라이온 킹",
+    date: "2023.12.15(수) 19:30",
+    venue: "샤롯데 씨어터",
+    status:"입장",
+    genre: "콘서트",
+    enterTime:"05.15 18:23",
+    name:"홍길동",
+    seat:"33구역 A-4",
+},
+{
     id: "5",
     title: "뮤지컬 라이온 킹",
     date: "2023.12.15(수) 19:30",
     venue: "샤롯데 씨어터",
-    issuer: "인터파크 티켓",
+    status:"입장",
     genre: "콘서트",
+    enterTime:"05.15 18:23",
+    name:"홍길동",
     seat:"33구역 A-4",
-    name:"홍길동"
-}
+},
+{
+    id: "6",
+    title: "뮤지컬 라이온 킹",
+    date: "2023.12.15(수) 19:30",
+    venue: "샤롯데 씨어터",
+    status:"입장",
+    genre: "콘서트",
+    enterTime:"05.15 18:23",
+    name:"홍길동6",
+    seat:"33구역 A-4",
+},
+{
+    id: "7",
+    title: "뮤지컬 라이온 킹",
+    date: "2023.12.15(수) 19:30",
+    venue: "샤롯데 씨어터",
+    status:"입장",
+    genre: "콘서트",
+    enterTime:"05.15 18:23",
+    name:"홍길동7",
+    seat:"33구역 A-4",
+},
+]
