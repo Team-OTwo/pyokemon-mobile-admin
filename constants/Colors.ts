@@ -18,7 +18,9 @@ export const Colors = {
     primary20:'rgba(255,207,54,0.2)',
     success:'#44CB8F',
     success20:'rgba(68, 203, 143, 0.2)',
+    gray100:'#F3F2F1',
     gray300:'#DDDDDB',
+    gray500:'#A19F9A',
     gray700:'#686764',
   },
   dark: {
