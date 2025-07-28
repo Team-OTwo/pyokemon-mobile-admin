@@ -19,6 +19,7 @@ export const Colors = {
     success:'#44CB8F',
     success20:'rgba(68, 203, 143, 0.2)',
     error:'#ED7171',
+    error20:'rgba(237, 113, 113, 0.2)',
     gray100:'#F3F2F1',
     gray300:'#DDDDDB',
     gray500:'#A19F9A',

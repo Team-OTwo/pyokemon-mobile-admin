@@ -1,7 +1,7 @@
 import Header from "@/components/header";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
-import { myTicket } from "@/constants/ticket";
+import { ticket } from "@/constants/ticket";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Toast, { BaseToast, ErrorToast } from "react-native-toast-message";
@@ -12,7 +12,7 @@ function TicketQrPage() {
     Toast.show({
       type: "success",
       text1: "입장 성공",
-      text2: myTicket.name + " " + myTicket.seat,
+      text2: ticket.name + " " + ticket.seat,
       position: "bottom",
     });
   };
