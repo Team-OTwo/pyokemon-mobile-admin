@@ -1,18 +1,18 @@
 import { ThemedText } from "@/components/ThemedText";
-import { ticketsSample } from "@/constants/ticket";
-import { Ticket } from "@/types/ticket";
+import { eventsSample } from "@/constants/event";
+import { Event } from "@/types/event";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import GenreList from "./_components/genre-list";
 import TicketList from "./_components/ticket-list";
 
 function HomePage() {
-    const [tickets, setTickets] = useState<Ticket[]>([]);
+    const [tickets, setTickets] = useState<Event[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   useEffect(()=>{
-    if(ticketsSample){
-      setTickets(ticketsSample);
+    if(eventsSample){
+      setTickets(eventsSample);
     }
   },[]);
 

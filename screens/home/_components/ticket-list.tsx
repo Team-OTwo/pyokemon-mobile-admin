@@ -1,11 +1,11 @@
-import { Ticket } from '@/types/ticket';
+import { Event } from '@/types/event';
 import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import TicketCard from './ticket-card';
 
 
 interface TicketListProps{
-    tickets:Ticket[];
+    tickets:Event[];
 }
 
 function TicketList ({tickets}:TicketListProps) {

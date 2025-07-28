@@ -4,7 +4,7 @@ import { ThemedView } from "@/components/ThemedView";
 import Badge from "@/components/ui/badge";
 import CustomButton from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
-import { ticketSample as ticket } from "@/constants/ticket";
+import { eventSample as event } from "@/constants/event";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -18,16 +18,16 @@ function DetailPage() {
       <ThemedView style={styles.container}>
         <View style={styles.badges}>
           <Badge
-            text={ticket.genre}
+            text={event.genre}
             textColor={Colors.light.text}
             backgroundColor={Colors.light.primary20}
           />
 
           <Badge
-            text={ticket.status}
+            text={event.status}
             textColor={Colors.light.text}
             backgroundColor={
-              ticket.status === "입장중"
+              event.status === "입장중"
                 ? Colors.light.success20
                 : Colors.light.gray300
             }
@@ -36,24 +36,24 @@ function DetailPage() {
 
         {/* title */}
         <ThemedText type="title" style={styles.title}>
-          {ticket.title}
+          {event.title}
         </ThemedText>
 
         {/* 일시, 장소 */}
         <View style={styles.infoContainer}>
           <View style={styles.info}>
             <Text style={styles.infoTitle}>일시</Text>
-            <ThemedText>{ticket.date}</ThemedText>
+            <ThemedText>{event.date}</ThemedText>
           </View>
 
           <View style={styles.info}>
             <Text style={styles.infoTitle}>장소</Text>
-            <ThemedText>{ticket.venue}</ThemedText>
+            <ThemedText>{event.venue}</ThemedText>
           </View>
 
           <View style={styles.info}>
             <Text style={styles.infoTitle}>발급처</Text>
-            <ThemedText>{ticket.issuer}</ThemedText>
+            <ThemedText>{event.issuer}</ThemedText>
           </View>
         </View>
 

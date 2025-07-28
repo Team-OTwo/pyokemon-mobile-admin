@@ -2,12 +2,12 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import Badge from "@/components/ui/badge";
 import { Colors } from "@/constants/Colors";
-import { Ticket } from "@/types/ticket";
+import { Event } from "@/types/event";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 interface TicketCardProps {
-  ticket: Ticket;
+  ticket: Event;
 }
 
 function TicketCard ({ ticket }: TicketCardProps) {
