@@ -1,11 +1,13 @@
-import HomePage from '@/screens/home/home-page';
+import DetailPage from '@/screens/detail/detail-page';
 import { StyleSheet } from 'react-native';
 
 
 
 export default function HomeScreen() {
   return (
-    <HomePage />
+    // <HomePage />
+    <DetailPage />
+
     // <ParallaxScrollView
     //   headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
     //   headerImage={

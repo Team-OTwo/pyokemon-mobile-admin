@@ -1,5 +1,15 @@
 import { Ticket } from "@/types/ticket";
 
+export const ticketSample: Ticket = {
+  id: "1",
+  title: "BTS 월드투어 2023",
+  date: "2023.12.15(수) 19:30",
+  venue: "서울 올림픽 주경기장",
+  issuer: "Ticketmaster Korea",
+  status: "입장전",
+  genre: "콘서트",
+};
+
 export const ticketsSample: Ticket[] = [
   {
     id: "1",
