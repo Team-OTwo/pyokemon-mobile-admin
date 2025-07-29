@@ -5,15 +5,16 @@ import TicketCard from './ticket-card';
 
 
 interface TicketListProps{
-    tickets:Event[];
+    events:Event[];
+    onTicketPress?: (event: Event) => void;
 }
 
-function TicketList ({tickets}:TicketListProps) {
+function TicketList ({events, onTicketPress}:TicketListProps) {
   return (
     <FlatList
       contentContainerStyle={styles.container}
-      data={tickets}
-      renderItem={({ item }) => <TicketCard ticket={item} />}
+      data={events}
+      renderItem={({ item }) => <TicketCard event={item} onPress={onTicketPress}/>}
     ></FlatList>
   );
 }

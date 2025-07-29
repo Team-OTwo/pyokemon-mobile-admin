@@ -1,12 +1,19 @@
 import { ThemedText } from "@/components/ThemedText";
 import { eventsSample } from "@/constants/event";
 import { Event } from "@/types/event";
+import { RootStackParamList } from "@/types/navigation";
+import Feather from '@expo/vector-icons/Feather';
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import GenreList from "./_components/genre-list";
 import TicketList from "./_components/ticket-list";
 
-function HomePage() {
+type HomePageProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
+};
+
+function HomePage({navigation}:HomePageProps) {
     const [tickets, setTickets] = useState<Event[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
@@ -16,7 +23,17 @@ function HomePage() {
     }
   },[]);
 
+  const handleEventPress = (event: Event) => {
+    // 티켓 상세 페이지로 이동
+    navigation.navigate("Detail", { eventId: event.id });
+  };
+
   const filteredTickets = activeFilter ? tickets.filter((ticket) => ticket.genre === activeFilter) : tickets;
+
+  const handleProfilePress = ()=>{
+    navigation.navigate("MyPage");
+  }
+
   return (
     <View style={styles.container}>
       {/* header */}
@@ -25,7 +42,9 @@ function HomePage() {
       {/* title */}
       <View style={styles.titleContainer}>
         <ThemedText type="title">공연</ThemedText>
-        <ThemedText>안녕하세요, 관리자님!</ThemedText>
+        <TouchableOpacity onPress={handleProfilePress}>
+          <Feather name="user" size={24} color="black" />
+        </TouchableOpacity>
       </View>
 
       {/* genre list*/}
@@ -35,7 +54,7 @@ function HomePage() {
 
       {/* ticket list */}
       <View>
-        <TicketList tickets={filteredTickets}/>
+        <TicketList events={filteredTickets} onTicketPress={handleEventPress}/>
       </View>
     </View>
   );

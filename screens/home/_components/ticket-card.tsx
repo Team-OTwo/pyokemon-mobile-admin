@@ -1,30 +1,33 @@
 import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import Badge from "@/components/ui/badge";
 import { Colors } from "@/constants/Colors";
 import { Event } from "@/types/event";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface TicketCardProps {
-  ticket: Event;
+  event: Event;
+  onPress?: (event: Event) => void;
 }
 
-function TicketCard ({ ticket }: TicketCardProps) {
+function TicketCard ({ event, onPress }: TicketCardProps) {
   return (
-    <ThemedView style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => onPress && onPress(event)}
+    >
       <View style={styles.badges}>
         <Badge
-          text={ticket.genre}
+          text={event.genre}
           textColor={Colors.light.text}
           backgroundColor={Colors.light.primary20}
         />
 
         <Badge
-          text={ticket.status}
+          text={event.status}
           textColor={Colors.light.text}
           backgroundColor={
-            ticket.status === "입장중"
+            event.status === "입장중"
               ? Colors.light.success20
               : Colors.light.gray300
           }
@@ -32,23 +35,23 @@ function TicketCard ({ ticket }: TicketCardProps) {
       </View>
 
       {/* title */}
-      <ThemedText type="title">{ticket.title}</ThemedText>
+      <ThemedText type="title">{event.title}</ThemedText>
 
       {/* 일시, 장소 */}
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Text style={styles.infoTitle}>일시</Text>
-          <ThemedText>{ticket.date}</ThemedText>
+          <ThemedText>{event.date}</ThemedText>
         </View>
 
         <View style={styles.info}>
           <Text style={styles.infoTitle}>장소</Text>
-          <ThemedText>{ticket.venue}</ThemedText>
+          <ThemedText>{event.venue}</ThemedText>
         </View>
       </View>
 
-      <Text style={styles.subtext}>발급처: {ticket.issuer}</Text>
-    </ThemedView>
+      <Text style={styles.subtext}>발급처: {event.issuer}</Text>
+    </TouchableOpacity>
   );
 };
 
