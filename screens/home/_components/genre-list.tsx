@@ -43,7 +43,7 @@ const GenreList = ({activeFilter, setActiveFilter}:GenreListProps) => {
             <ThemedText
               style={[
                 styles.filterText,
-                activeFilter === item.value && { color: "white" },
+                activeFilter === item.value && { color: Colors.light.text },
               ]}
             >
               {item.label}
