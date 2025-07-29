@@ -5,11 +5,28 @@ import Badge from "@/components/ui/badge";
 import CustomButton from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
 import { eventSample as event } from "@/constants/event";
+import { RootStackParamList } from "@/types/navigation";
+import { RouteProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+type DetailPageProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "Detail">;
+  route: RouteProp<RootStackParamList, "Detail">;
+};
 
-function DetailPage() {
+function DetailPage({ route, navigation }: DetailPageProps) {
+  const { eventId } = route.params;
+
+  const handleLogPress = ()=>{
+    navigation.navigate("ScanLog", { eventId: event.id });
+  }
+
+  const handleQrButtonPress = ()=>{
+    navigation.navigate("ChallengeQr");
+  }
+
   return (
     <ThemedView style={styles.screen}>
       <Header title="공연 상세" />
@@ -62,10 +79,11 @@ function DetailPage() {
           borderColor={Colors.light.gray300}
           backgroundColor={Colors.light.background}
           text="스캔 이력 확인"
+          onPress={handleLogPress}
         ></CustomButton>
       </ThemedView>
       <View style={styles.qrButton}>
-        <CustomButton text="입장 QR 생성"></CustomButton>
+        <CustomButton text="입장 QR 생성" onPress={handleQrButtonPress}></CustomButton>
       </View>
     </ThemedView>
   );

@@ -3,17 +3,25 @@ import { ThemedView } from "@/components/ThemedView";
 import CustomButton from "@/components/ui/button";
 import CustomInput from "@/components/ui/input";
 import { Colors } from "@/constants/Colors";
-import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "@/types/navigation";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import { Alert, StyleSheet } from "react-native";
 
-const LoginPage = () => {
-  const navigation = useNavigation();
+
+type LoginPageProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
+};
+
+function LoginPage ({navigation}:LoginPageProps){
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
   );
+
+
 
   const validateForm = (): boolean => {
     const newErrors: { email?: string; password?: string } = {};
@@ -40,7 +48,7 @@ const LoginPage = () => {
     try {
       // const res = await restful("POST", "/auth/login", { email, password });
       // await AsyncStorage.setItem("token", res.data.access.token);
-    //   navigation.replace("Home");
+      navigation.replace("Home");
     } catch (error) {
       Alert.alert("오류", "로그인 중 문제가 발생했습니다.");
     }

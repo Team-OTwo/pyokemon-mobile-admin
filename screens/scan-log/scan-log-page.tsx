@@ -5,11 +5,19 @@ import Badge from '@/components/ui/badge';
 import { Colors } from '@/constants/Colors';
 import { eventSample as event } from "@/constants/event";
 import { tickets } from '@/constants/ticket';
+import { RootStackParamList } from '@/types/navigation';
+import { RouteProp } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import ScanLogCard from './_components/scan-log-card';
 
-const ScanLogPage = () => {
+type ScanLogPageProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, "ScanLog">;
+  route: RouteProp<RootStackParamList, "ScanLog">;
+};
+
+function ScanLogPage ({route, navigation}:ScanLogPageProps){
   return (
     <ThemedView style={styles.screen}>
       <Header title="스캔 이력 로그" />
