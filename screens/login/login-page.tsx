@@ -2,26 +2,19 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import CustomButton from "@/components/ui/button";
 import CustomInput from "@/components/ui/input";
-import { Colors } from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { Alert, StyleSheet } from "react-native";
-
+import { Alert, Platform, StyleSheet, View } from "react-native";
 
 type LoginPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
 };
 
-function LoginPage ({navigation}:LoginPageProps){
-
+function LoginPage({ navigation }: LoginPageProps) {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-    {}
-  );
-
-
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
   const validateForm = (): boolean => {
     const newErrors: { email?: string; password?: string } = {};
@@ -55,9 +48,9 @@ function LoginPage ({navigation}:LoginPageProps){
   };
   return (
     <ThemedView style={styles.screen}>
-      <ThemedText type="title" style={styles.title}>
-        로그인
-      </ThemedText>
+      <View style={styles.header}>
+        <ThemedText style={styles.title}>Pyokemon</ThemedText>
+      </View>
 
       <CustomInput
         value={email}
@@ -75,31 +68,28 @@ function LoginPage ({navigation}:LoginPageProps){
         error={errors.password}
       />
 
-      <CustomButton text="로그인" onPress={handleLogin} />
+      <CustomButton style={{ marginTop: 24 }} text="로그인" onPress={handleLogin} />
     </ThemedView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: "center",
-    padding: 16,
+    paddingHorizontal: 16,
+  },
+  header: {
+    marginBottom: Platform.OS === "ios" ? 24 : 32,
+    alignItems: "center",
   },
   title: {
     textAlign: "center",
-    paddingVertical: 16,
-  },
-  input: {
-    width: "100%",
-    backgroundColor: Colors.light.gray100,
-    borderWidth: 1,
-    borderColor: Colors.light.gray300,
-    borderRadius: 12,
-    padding: 8,
-    height: 50,
-    fontSize: 16,
-    marginBottom: 16,
+    fontSize: 30,
+    fontFamily: "Bungee-Regular",
+    fontWeight: "400",
+    lineHeight: 40,
+    letterSpacing: 1,
   },
 });
 export default LoginPage;

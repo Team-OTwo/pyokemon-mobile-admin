@@ -26,16 +26,14 @@ const CustomInput = ({
 }: CustomInputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   return (
-    <View style={styles.container}>
+    <View>
       <Text>{label}</Text>
 
       <TextInput
         style={[
           styles.input,
           {
-            borderColor: isFocused
-              ? Colors.light.primary
-              : Colors.light.gray300,
+            borderColor: isFocused ? Colors.light.primary : Colors.light.gray300,
           },
         ]}
         value={value}
@@ -55,16 +53,12 @@ const CustomInput = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
   title: {
     textAlign: "center",
     paddingVertical: 16,
   },
   input: {
     width: "100%",
-    backgroundColor: Colors.light.gray100,
     borderWidth: 1,
     borderColor: Colors.light.gray300,
     borderRadius: 12,
