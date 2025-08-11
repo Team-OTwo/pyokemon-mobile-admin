@@ -17,8 +17,8 @@ const Badge = ({ text, backgroundColor, textColor = "#222222" }: BadgeProps) => 
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 4,
-    paddingVertical: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 1,
     borderRadius: 100,
   },
   text: {

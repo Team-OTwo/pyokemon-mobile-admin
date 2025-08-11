@@ -32,12 +32,8 @@ const ScanLogCard = ({ ticket }: ScanLogCardProps) => {
       <View>
         <Badge
           text={ticket.status}
-          textColor={Colors.light.text}
-          backgroundColor={
-            ticket.status === "입장"
-              ? Colors.light.success20
-              : Colors.light.error20
-          }
+          textColor={Colors.light.background}
+          backgroundColor={ticket.status === "입장" ? Colors.light.success : Colors.light.error}
         />
       </View>
     </View>
