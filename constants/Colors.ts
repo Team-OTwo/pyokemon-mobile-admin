@@ -16,7 +16,7 @@ export const Colors = {
     tabIconSelected: tintColorLight,
     primary: "#75B8FF",
     primary20: "rgba(255,207,54,0.2)",
-    success: "#44CB8F",
+    success: "#38A172",
     success20: "rgba(68, 203, 143, 0.2)",
     error: "#ED7171",
     error20: "rgba(237, 113, 113, 0.2)",

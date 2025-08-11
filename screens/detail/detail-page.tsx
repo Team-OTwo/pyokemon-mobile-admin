@@ -4,12 +4,13 @@ import { ThemedView } from "@/components/ThemedView";
 import Badge from "@/components/ui/badge";
 import CustomButton from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
-import { eventSample as event } from "@/constants/event";
+import { eventsSample } from "@/constants/event";
 import { RootStackParamList } from "@/types/navigation";
+import { Feather } from "@expo/vector-icons";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
 
 type DetailPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Detail">;
@@ -18,15 +19,15 @@ type DetailPageProps = {
 
 function DetailPage({ route, navigation }: DetailPageProps) {
   const { eventId } = route.params;
+  const [event, setEvent]: any = useState(eventsSample.find((event) => event.id === eventId));
 
-  const handleLogPress = ()=>{
-    navigation.navigate("ScanLog", { eventId: event.id });
-  }
+  const handleLogPress = () => {
+    navigation.navigate("ScanLog", { eventId });
+  };
 
-  const handleQrButtonPress = ()=>{
+  const handleQrButtonPress = () => {
     navigation.navigate("ChallengeQr");
-  }
-
+  };
   return (
     <ThemedView style={styles.screen}>
       <Header title="공연 상세" />
@@ -35,25 +36,22 @@ function DetailPage({ route, navigation }: DetailPageProps) {
       <ThemedView style={styles.container}>
         <View style={styles.badges}>
           <Badge
-            text={event.genre}
-            textColor={Colors.light.text}
-            backgroundColor={Colors.light.primary20}
-          />
-
-          <Badge
             text={event.status}
-            textColor={Colors.light.text}
-            backgroundColor={
+            textColor={
               event.status === "입장중"
-                ? Colors.light.success20
-                : Colors.light.gray300
+                ? Colors.light.success
+                : event.status === "입장전"
+                ? Colors.light.gray700
+                : Colors.light.error
             }
           />
+          {event.status === "입장중" && <Feather name="check-circle" size={16} color={Colors.light.success} />}
+          {event.status === "만료" && <Feather name="x-circle" size={16} color={Colors.light.error} />}
         </View>
 
         {/* title */}
         <ThemedText type="title" style={styles.title}>
-          {event.title}
+          {event?.title}
         </ThemedText>
 
         {/* 일시, 장소 */}
@@ -73,39 +71,35 @@ function DetailPage({ route, navigation }: DetailPageProps) {
             <ThemedText>{event.issuer}</ThemedText>
           </View>
         </View>
-
+      </ThemedView>
+      <View style={styles.qrButton}>
+        <CustomButton text="입장 QR 생성" onPress={handleQrButtonPress} />
         <CustomButton
           textColor={Colors.light.gray500}
           borderColor={Colors.light.gray300}
           backgroundColor={Colors.light.background}
           text="스캔 이력 확인"
           onPress={handleLogPress}
-        ></CustomButton>
-      </ThemedView>
-      <View style={styles.qrButton}>
-        <CustomButton text="입장 QR 생성" onPress={handleQrButtonPress}></CustomButton>
+        />
       </View>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen:{
-    flex:1,
+  screen: {
+    flex: 1,
   },
   container: {
     padding: 16,
   },
   badges: {
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 6,
+    alignItems: "center",
   },
   title: {
     paddingBottom: 12,
     borderBottomColor: Colors.light.gray100,
-    borderBottomWidth: 1,
   },
   infoContainer: {
     marginTop: 12,
@@ -117,7 +111,6 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   info: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
   },
@@ -133,12 +126,14 @@ const styles = StyleSheet.create({
     color: Colors.light.gray700,
     fontSize: 12,
   },
-  qrButton:{
-    position:'absolute',  
-    padding:16,
-    bottom:0,
-    width:'100%'
-  }
+  qrButton: {
+    position: "absolute",
+    padding: 16,
+    bottom: 0,
+    gap: 12,
+    width: "100%",
+    marginBottom: Platform.OS === "ios" ? 16 : 50,
+  },
 });
 
 export default DetailPage;
