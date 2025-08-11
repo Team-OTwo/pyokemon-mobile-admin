@@ -9,14 +9,25 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "QR 코드를 스캔하기 위해 카메라 접근 권한이 필요합니다.",
+        "NSMicrophoneUsageDescription": "QR 코드 스캔 시 마이크 권한이 필요할 수 있습니다.",
+        "NSPhotoLibraryUsageDescription": "QR 코드 이미지를 저장하기 위해 사진 라이브러리 접근 권한이 필요할 수 있습니다."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -34,7 +45,15 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-font"
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "QR 코드를 스캔하기 위해 카메라 접근 권한이 필요합니다.",
+          "microphonePermission": "QR 코드 스캔 시 마이크 권한이 필요할 수 있습니다.",
+          "enableMicrophonePermission": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

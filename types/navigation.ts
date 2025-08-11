@@ -8,4 +8,5 @@ export type RootStackParamList = {
   ScanLog: { eventId: string };
   ChallengeQr: undefined;
   TicketQR: { ticketId: string };
+  QrScan: undefined;
 };
