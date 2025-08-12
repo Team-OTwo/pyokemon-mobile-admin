@@ -1,17 +1,33 @@
 import LoginPage from "@/screens/login/login-page";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+import { useFonts } from "expo-font";
+import React, { useState } from "react";
 import ChallengeQrPage from "./screens/challenge-qr/challenge-qr-page";
 import DetailPage from "./screens/detail/detail-page";
 import HomePage from "./screens/home/home-page";
 import MyPage from "./screens/my-page/my-page";
 import ScanLogPage from "./screens/scan-log/scan-log-page";
+import SplashPage from "./screens/splash/splash-page";
 import { RootStackParamList } from "./types/navigation";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    "Bungee-Regular": require("@/assets/fonts/Bungee-Regular.ttf"),
+  });
+
+  const [isSplashVisible, setIsSplashVisible] = useState<boolean>(true);
+
+  if (isSplashVisible) {
+    return <SplashPage onFinish={() => setIsSplashVisible(false)} />;
+  }
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>

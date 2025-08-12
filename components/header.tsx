@@ -1,7 +1,7 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 
 interface HeaderProps {
@@ -15,7 +15,7 @@ const Header = ({ title }: HeaderProps) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.icon} onPress={handleGoBack}>
-        <Ionicons name="chevron-back-outline" size={16} color="black" />
+        <Ionicons name="chevron-back-outline" size={24} color="black" />
       </TouchableOpacity>
       <ThemedText type="title">{title}</ThemedText>
       <View style={styles.icon}></View>
@@ -26,15 +26,14 @@ const Header = ({ title }: HeaderProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
+    justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingVertical: 9,
-    height: 50,
+    paddingVertical: 10,
+    marginTop: Platform.OS === "ios" ? 30 : 40,
   },
   icon: {
-    width: 16,
-    height: 16,
+    width: 32,
   },
 });
 

@@ -1,75 +1,59 @@
-import Header from '@/components/header';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import Badge from '@/components/ui/badge';
-import { Colors } from '@/constants/Colors';
+import Header from "@/components/header";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/Colors";
 import { eventSample as event } from "@/constants/event";
-import { tickets } from '@/constants/ticket';
-import { RootStackParamList } from '@/types/navigation';
-import { RouteProp } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import ScanLogCard from './_components/scan-log-card';
+import { tickets } from "@/constants/ticket";
+import { RootStackParamList } from "@/types/navigation";
+import { RouteProp } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import React from "react";
+import { FlatList, StyleSheet, Text, View } from "react-native";
+import ScanLogCard from "./_components/scan-log-card";
 
 type ScanLogPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "ScanLog">;
   route: RouteProp<RootStackParamList, "ScanLog">;
 };
 
-function ScanLogPage ({route, navigation}:ScanLogPageProps){
+function ScanLogPage({ route, navigation }: ScanLogPageProps) {
   return (
     <ThemedView style={styles.screen}>
       <Header title="스캔 이력 로그" />
 
       {/* event info */}
       <ThemedView style={styles.container}>
-        <View style={styles.badges}>
-          <Badge
-            text={event.genre}
-            textColor={Colors.light.text}
-            backgroundColor={Colors.light.primary20}
-          />
+        {/* 일시, 장소 */}
+        <View style={styles.info}>
+          <Text style={styles.infoTitle}>일시</Text>
+          <ThemedText>{event.date}</ThemedText>
         </View>
 
-        {/* title */}
-        <ThemedText type="title" style={styles.title}>
-          {event.title}
-        </ThemedText>
+        <View style={styles.info}>
+          <Text style={styles.infoTitle}>장소</Text>
+          <ThemedText>{event.venue}</ThemedText>
+        </View>
 
-        {/* 일시, 장소 */}
-        <View style={styles.infoContainer}>
-          <View style={styles.info}>
-            <Text style={styles.infoTitle}>일시</Text>
-            <ThemedText>{event.date}</ThemedText>
-          </View>
-
-          <View style={styles.info}>
-            <Text style={styles.infoTitle}>장소</Text>
-            <ThemedText>{event.venue}</ThemedText>
-          </View>
-
-          <View style={styles.info}>
-            <Text style={styles.infoTitle}>발급처</Text>
-            <ThemedText>{event.issuer}</ThemedText>
-          </View>
+        <View style={styles.info}>
+          <Text style={styles.infoTitle}>발급처</Text>
+          <ThemedText>{event.issuer}</ThemedText>
         </View>
       </ThemedView>
 
-        <FlatList
-          data={tickets}
-          renderItem={({ item }) => {
-            return <ScanLogCard ticket={item} />;
-          }}
-          contentContainerStyle={styles.logContainer}
-        ></FlatList>
+      <FlatList
+        data={tickets}
+        renderItem={({ item }) => {
+          return <ScanLogCard ticket={item} />;
+        }}
+        contentContainerStyle={styles.logContainer}
+      ></FlatList>
     </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  screen:{
-    flex:1,
+  screen: {
+    flex: 1,
   },
   container: {
     padding: 16,
@@ -78,18 +62,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 6,
   },
-  title: {
-    paddingBottom: 12,
 
-  },
-  infoContainer: {
-    gap: 6,
-    paddingBottom:16,
-    borderBottomColor: Colors.light.gray100,
-    borderBottomWidth: 1,
-  },
   info: {
     flex: 1,
     flexDirection: "row",
@@ -107,17 +81,17 @@ const styles = StyleSheet.create({
     color: Colors.light.gray700,
     fontSize: 12,
   },
-  qrButton:{
-    position:'absolute',  
-    padding:16,
-    bottom:0,
-    width:'100%'
+  qrButton: {
+    position: "absolute",
+    padding: 16,
+    bottom: 0,
+    width: "100%",
   },
-  logContainer:{
-    padding:16,
-    gap:16,
-    paddingTop:0,
-    marginBottom:60,
-  }
+  logContainer: {
+    padding: 16,
+    gap: 16,
+    paddingTop: 0,
+    marginBottom: 60,
+  },
 });
-export default ScanLogPage
+export default ScanLogPage;

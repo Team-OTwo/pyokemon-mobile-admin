@@ -5,11 +5,10 @@ import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 
 interface GenreListProps {
   activeFilter: string | null;
-  setActiveFilter: (value: string|null) => void;
+  setActiveFilter: (value: string | null) => void;
 }
 
-const GenreList = ({activeFilter, setActiveFilter}:GenreListProps) => {
-
+const GenreList = ({ activeFilter, setActiveFilter }: GenreListProps) => {
   const filterOptions = [
     { label: "전체", value: null },
     { label: "콘서트", value: "콘서트" },
@@ -19,7 +18,6 @@ const GenreList = ({activeFilter, setActiveFilter}:GenreListProps) => {
     { label: "스포츠", value: "스포츠" },
     { label: "행사", value: "행사" },
   ];
-
 
   return (
     <View style={styles.filterContainer}>
@@ -36,16 +34,9 @@ const GenreList = ({activeFilter, setActiveFilter}:GenreListProps) => {
                 backgroundColor: Colors.light.primary,
               },
             ]}
-            onPress={() =>
-              setActiveFilter(item.value)
-            }
+            onPress={() => setActiveFilter(item.value)}
           >
-            <ThemedText
-              style={[
-                styles.filterText,
-                activeFilter === item.value && { color: Colors.light.text },
-              ]}
-            >
+            <ThemedText style={[styles.filterText, activeFilter === item.value && { color: "white" }]}>
               {item.label}
             </ThemedText>
           </TouchableOpacity>
@@ -72,7 +63,7 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontSize: 14,
-    color:Colors.light.gray700,
+    color: Colors.light.gray700,
   },
 });
 

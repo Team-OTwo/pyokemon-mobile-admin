@@ -1,11 +1,12 @@
 import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 import { eventsSample } from "@/constants/event";
 import { Event } from "@/types/event";
 import { RootStackParamList } from "@/types/navigation";
-import Feather from '@expo/vector-icons/Feather';
+import Feather from "@expo/vector-icons/Feather";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import GenreList from "./_components/genre-list";
 import TicketList from "./_components/ticket-list";
 
@@ -13,15 +14,15 @@ type HomePageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 };
 
-function HomePage({navigation}:HomePageProps) {
-    const [tickets, setTickets] = useState<Event[]>([]);
+function HomePage({ navigation }: HomePageProps) {
+  const [tickets, setTickets] = useState<Event[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
-  useEffect(()=>{
-    if(eventsSample){
+  useEffect(() => {
+    if (eventsSample) {
       setTickets(eventsSample);
     }
-  },[]);
+  }, []);
 
   const handleEventPress = (event: Event) => {
     // 티켓 상세 페이지로 이동
@@ -30,15 +31,12 @@ function HomePage({navigation}:HomePageProps) {
 
   const filteredTickets = activeFilter ? tickets.filter((ticket) => ticket.genre === activeFilter) : tickets;
 
-  const handleProfilePress = ()=>{
+  const handleProfilePress = () => {
     navigation.navigate("MyPage");
-  }
+  };
 
   return (
-    <View style={styles.container}>
-      {/* header */}
-      <View></View>
-
+    <ThemedView style={styles.container}>
       {/* title */}
       <View style={styles.titleContainer}>
         <ThemedText type="title">공연</ThemedText>
@@ -49,27 +47,26 @@ function HomePage({navigation}:HomePageProps) {
 
       {/* genre list*/}
       <View>
-        <GenreList activeFilter={activeFilter} setActiveFilter={setActiveFilter}/>
+        <GenreList activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
       </View>
 
       {/* ticket list */}
-      <View>
-        <TicketList events={filteredTickets} onTicketPress={handleEventPress}/>
-      </View>
-    </View>
+      <TicketList events={filteredTickets} onTicketPress={handleEventPress} />
+      {/* </SafeAreaView> */}
+    </ThemedView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
   },
   titleContainer: {
-    flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: Platform.OS === "ios" ? 16 : 50,
+    paddingBottom: 8,
   },
   header: {
     paddingHorizontal: 20,
@@ -91,16 +88,14 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     marginBottom: 8,
   },
-  content: {
-    flex: 1,
-  },
   bottomSafeArea: {
     backgroundColor: "transparent",
+    paddingBottom: 16,
   },
-  //   footer: {
-  //     padding: 16,
-  //     paddingBottom: Platform.OS === "android" ? 50 : 16,
-  //   },
+  footer: {
+    padding: 16,
+    paddingBottom: Platform.OS === "android" ? 50 : 16,
+  },
 });
 
 export default HomePage;

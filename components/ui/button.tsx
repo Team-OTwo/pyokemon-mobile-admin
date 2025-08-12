@@ -1,17 +1,28 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 
 interface ButtonProps {
+  style?: StyleProp<ViewStyle>;
   text: string;
   textColor?: string;
   borderColor?: string;
-  backgroundColor?:string;
-  onPress?:()=>void;
+  backgroundColor?: string;
+  onPress?: () => void;
 }
 
-const CustomButton = ({ text, textColor="#222", borderColor="#FFCF36", backgroundColor="#FFCF36", onPress }: ButtonProps) => {
+const CustomButton = ({
+  style,
+  text,
+  textColor = "#FFFFFF",
+  borderColor = "#75B8FF",
+  backgroundColor = "#75B8FF",
+  onPress,
+}: ButtonProps) => {
   return (
-    <TouchableOpacity style={[styles.button, { borderColor: borderColor, backgroundColor:backgroundColor }]} onPress={onPress}>
+    <TouchableOpacity
+      style={[style, styles.button, { borderColor: borderColor, backgroundColor: backgroundColor }]}
+      onPress={onPress}
+    >
       <Text style={[styles.text, { color: textColor }]}>{text}</Text>
     </TouchableOpacity>
   );
@@ -22,12 +33,12 @@ export default CustomButton;
 const styles = StyleSheet.create({
   button: {
     borderWidth: 1,
-    borderRadius: 12,
+    borderRadius: 20,
     padding: 16,
   },
-  text:{
-    textAlign:'center',
-    fontWeight:'600',
-    fontSize:16
-  }
+  text: {
+    textAlign: "center",
+    fontWeight: "600",
+    fontSize: 16,
+  },
 });
