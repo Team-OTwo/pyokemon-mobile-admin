@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingTop: Platform.OS === "ios" ? 16 : 50,
+    paddingTop: 16,
     paddingBottom: 8,
   },
   header: {

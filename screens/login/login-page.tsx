@@ -5,7 +5,7 @@ import CustomInput from "@/components/ui/input";
 import { RootStackParamList } from "@/types/navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { Alert, Platform, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 
 type LoginPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   header: {
-    marginBottom: Platform.OS === "ios" ? 24 : 32,
     alignItems: "center",
   },
   title: {

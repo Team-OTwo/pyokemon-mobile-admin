@@ -10,7 +10,7 @@ import { Feather } from "@expo/vector-icons";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 type DetailPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Detail">;
@@ -132,7 +132,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     gap: 12,
     width: "100%",
-    marginBottom: Platform.OS === "ios" ? 16 : 50,
   },
 });
 
