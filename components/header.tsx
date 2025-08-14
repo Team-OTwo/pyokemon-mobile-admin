@@ -1,7 +1,7 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { ThemedText } from "./ThemedText";
 
 interface HeaderProps {
@@ -30,7 +30,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingVertical: 10,
-    marginTop: Platform.OS === "ios" ? 30 : 40,
   },
   icon: {
     width: 32,
