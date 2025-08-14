@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast, { BaseToast } from "react-native-toast-message";
 import { Colors } from "./constants/Colors";
 import ChallengeQrPage from "./screens/challenge-qr/challenge-qr-page";
@@ -37,17 +38,22 @@ export default function App() {
 
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={LoginPage} />
-          <Stack.Screen name="Home" component={HomePage} />
-          <Stack.Screen name="MyPage" component={MyPage} />
-          <Stack.Screen name="Detail" component={DetailPage} />
-          <Stack.Screen name="ScanLog" component={ScanLogPage} />
-          <Stack.Screen name="ChallengeQr" component={ChallengeQrPage} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <Toast config={toastConfig} />
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Login" component={LoginPage} />
+            <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="MyPage" component={MyPage} />
+            <Stack.Screen name="Detail" component={DetailPage} />
+            <Stack.Screen name="ScanLog" component={ScanLogPage} />
+            <Stack.Screen name="ChallengeQr" component={ChallengeQrPage} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <Toast config={toastConfig} />
+      </SafeAreaView>
     </>
   );
 }
