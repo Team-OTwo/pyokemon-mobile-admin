@@ -10,7 +10,7 @@ export const postLogin = async (data: LoginRequest) => {
   } catch (error: any) {
     if (error.response?.data) {
       console.log("Server response:", error.response.data);
-      return error.response.data; // success=false, message 포함
+      return error.response.data;
     }
     console.log(error);
     throw error;
