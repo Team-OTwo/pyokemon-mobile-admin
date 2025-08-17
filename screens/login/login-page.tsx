@@ -1,7 +1,12 @@
+import { postLogin } from "@/api/account/fetchers/post-login";
 import CustomButton from "@/components/ui/button";
 import CustomInput from "@/components/ui/input";
+import { Colors } from "@/constants/Colors";
+import { LoginRequest } from "@/types/account";
 import { RootStackParamList } from "@/types/navigation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 
@@ -10,17 +15,16 @@ type LoginPageProps = {
 };
 
 function LoginPage({ navigation }: LoginPageProps) {
-  const [email, setEmail] = useState<string>("");
+  const [loginId, setLoginId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ loginId?: string; password?: string }>({});
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const validateForm = (): boolean => {
-    const newErrors: { email?: string; password?: string } = {};
+    const newErrors: { loginId?: string; password?: string } = {};
 
-    if (!email) {
-      newErrors.email = "이메일을 입력해주세요";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "올바른 이메일 형식이 아닙니다";
+    if (!loginId) {
+      newErrors.loginId = "아이디를 입력해주세요";
     }
 
     if (!password) {
@@ -33,16 +37,29 @@ function LoginPage({ navigation }: LoginPageProps) {
     return Object.keys(newErrors).length === 0;
   };
 
+  const loginMutation = useMutation({
+    mutationFn: (data: LoginRequest) => postLogin(data),
+    onSuccess: async (response) => {
+      if (response?.success) {
+        const { accessToken, refreshToken} = response.data;
+        if (accessToken) await AsyncStorage.setItem("accessToken", accessToken);
+        if (refreshToken) await AsyncStorage.setItem("refreshToken", refreshToken);
+
+        navigation.replace("Home");
+      } else {
+        setErrorMessage(response?.message || "로그인 실패");
+      }
+    },
+    onError: (error) => {
+      console.error("Login failed:", error);
+      Alert.alert("로그인 오류", "로그인 중 문제가 발생했습니다.");
+    },
+  });
+
   const handleLogin = async () => {
     if (!validateForm()) return;
 
-    try {
-      // const res = await restful("POST", "/auth/login", { email, password });
-      // await AsyncStorage.setItem("token", res.data.access.token);
-      navigation.replace("Home");
-    } catch (error) {
-      Alert.alert("오류", "로그인 중 문제가 발생했습니다.");
-    }
+    loginMutation.mutate({ loginId, password });
   };
   return (
     <View style={styles.screen}>
@@ -51,11 +68,11 @@ function LoginPage({ navigation }: LoginPageProps) {
       </View>
 
       <CustomInput
-        value={email}
-        onChangeText={setEmail}
+        value={loginId}
+        onChangeText={setLoginId}
         placeholder="이메일을 입력하세요"
         keyboardType="email-address"
-        error={errors.email}
+        error={errors.loginId}
       />
 
       <CustomInput
@@ -66,7 +83,13 @@ function LoginPage({ navigation }: LoginPageProps) {
         error={errors.password}
       />
 
-      <CustomButton style={{ marginTop: 24 }} text="로그인" onPress={handleLogin} />
+      {errorMessage?<Text style={styles.error}>{errorMessage}</Text>:null}
+
+      <CustomButton
+        style={{ marginTop: 24 }}
+        text="로그인"
+        onPress={handleLogin}
+      />
     </View>
   );
 }
@@ -74,7 +97,7 @@ function LoginPage({ navigation }: LoginPageProps) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
+    paddingTop:150,
     paddingHorizontal: 16,
   },
   header: {
@@ -88,5 +111,9 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     letterSpacing: 1,
   },
+  error:{
+    color:Colors.error,
+    fontSize:14,
+  }
 });
 export default LoginPage;

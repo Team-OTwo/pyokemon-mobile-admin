@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   error: {
-    fontSize: 12,
+    fontSize: 14,
     color: Colors.error,
   },
 });
