@@ -8,14 +8,21 @@ interface QRCodeGeneratorProps {
   onNextStep: () => void;
 }
 
-export const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ qrCode, onNextStep }) => {
+export const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({
+  qrCode,
+  onNextStep,
+}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.stepTitle}>1단계: QR 코드 생성</Text>
-      <QRCode value={qrCode} size={300} />
-      <Text style={styles.text}>생성된 QR 코드입니다.</Text>
-      <Text style={styles.qrValue}>QR 값: {qrCode}</Text>
-      <CustomButton text="다음 단계: QR 스캔" onPress={onNextStep} />
+      <Text style={styles.stepTitle}>관람객에게 QR을 제시해주세요</Text>
+      <QRCode value={qrCode} size={200} />
+      <Text style={styles.text}>
+        스캔이 완료되면 입장티켓 스캔 화면으로 넘어갑니다.
+      </Text>
+      {/* <Text style={styles.qrValue}>QR 값: {qrCode}</Text> */}
+      <View style={styles.buttonContainer}>
+        <CustomButton text="다음" onPress={onNextStep} />
+      </View>
     </View>
   );
 };
@@ -32,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 20
   },
   text: {
     textAlign: "center",
@@ -46,5 +53,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
+  },
+  buttonContainer: {
+    width: "100%",
   },
 });

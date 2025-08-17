@@ -1,10 +1,8 @@
 import Header from "@/components/header";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import Badge from "@/components/ui/badge";
 import CustomButton from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
 import { eventsSample } from "@/constants/event";
+import { globalStyles } from "@/globalStyles";
 import { RootStackParamList } from "@/types/navigation";
 import { Feather } from "@expo/vector-icons";
 import { RouteProp } from "@react-navigation/native";
@@ -29,60 +27,65 @@ function DetailPage({ route, navigation }: DetailPageProps) {
     navigation.navigate("ChallengeQr");
   };
   return (
-    <ThemedView style={styles.screen}>
+    <View style={styles.screen}>
       <Header title="공연 상세" />
 
       {/* content */}
-      <ThemedView style={styles.container}>
+      <View style={styles.container}>
         <View style={styles.badges}>
-          <Badge
-            text={event.status}
-            textColor={
-              event.status === "입장중"
-                ? Colors.light.success
-                : event.status === "입장전"
-                ? Colors.light.gray700
-                : Colors.light.error
-            }
-          />
-          {event.status === "입장중" && <Feather name="check-circle" size={16} color={Colors.light.success} />}
-          {event.status === "만료" && <Feather name="x-circle" size={16} color={Colors.light.error} />}
+          <Text
+            style={{
+              color:
+                event.status === "입장중"
+                  ? Colors.success
+                  : event.status === "입장전"
+                  ? Colors.gray700
+                  : Colors.error,
+              fontWeight: 600,
+            }}
+          >
+            {event.status}
+          </Text>
+          {event.status === "입장중" && (
+            <Feather name="check-circle" size={16} color={Colors.success} />
+          )}
+          {event.status === "만료" && (
+            <Feather name="x-circle" size={16} color={Colors.error} />
+          )}
         </View>
 
         {/* title */}
-        <ThemedText type="title" style={styles.title}>
-          {event?.title}
-        </ThemedText>
+        <Text style={[styles.title, globalStyles.title]}>{event?.title}</Text>
 
         {/* 일시, 장소 */}
         <View style={styles.infoContainer}>
           <View style={styles.info}>
             <Text style={styles.infoTitle}>일시</Text>
-            <ThemedText>{event.date}</ThemedText>
+            <Text style={styles.infoText}>{event.date}</Text>
           </View>
 
           <View style={styles.info}>
             <Text style={styles.infoTitle}>장소</Text>
-            <ThemedText>{event.venue}</ThemedText>
+            <Text style={styles.infoText}>{event.venue}</Text>
           </View>
 
           <View style={styles.info}>
             <Text style={styles.infoTitle}>발급처</Text>
-            <ThemedText>{event.issuer}</ThemedText>
+            <Text style={styles.infoText}>{event.issuer}</Text>
           </View>
         </View>
-      </ThemedView>
+      </View>
       <View style={styles.qrButton}>
         <CustomButton text="입장 QR 생성" onPress={handleQrButtonPress} />
         <CustomButton
-          textColor={Colors.light.gray500}
-          borderColor={Colors.light.gray300}
-          backgroundColor={Colors.light.background}
+          textColor={Colors.gray500}
+          borderColor={Colors.gray300}
+          backgroundColor={Colors.white}
           text="스캔 이력 확인"
           onPress={handleLogPress}
         />
       </View>
-    </ThemedView>
+    </View>
   );
 }
 
@@ -98,14 +101,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    paddingBottom: 12,
-    borderBottomColor: Colors.light.gray100,
+    paddingVertical: 12,
+    borderBottomColor: Colors.gray100,
   },
   infoContainer: {
-    marginTop: 12,
     gap: 6,
     marginBottom: 24,
-    borderColor: Colors.light.gray300,
+    borderColor: Colors.gray300,
     borderWidth: 1,
     borderRadius: 12,
     padding: 16,
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   infoTitle: {
-    color: Colors.light.gray700,
+    color: Colors.gray700,
     fontSize: 16,
     width: 70,
   },
@@ -123,7 +125,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   subtext: {
-    color: Colors.light.gray700,
+    color: Colors.gray700,
     fontSize: 12,
   },
   qrButton: {

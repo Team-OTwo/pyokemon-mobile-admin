@@ -1,11 +1,9 @@
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import CustomButton from "@/components/ui/button";
 import CustomInput from "@/components/ui/input";
 import { RootStackParamList } from "@/types/navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 
 type LoginPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
@@ -47,9 +45,9 @@ function LoginPage({ navigation }: LoginPageProps) {
     }
   };
   return (
-    <ThemedView style={styles.screen}>
+    <View style={styles.screen}>
       <View style={styles.header}>
-        <ThemedText style={styles.title}>Pyokemon</ThemedText>
+        <Text style={styles.title}>Pyokemon</Text>
       </View>
 
       <CustomInput
@@ -69,7 +67,7 @@ function LoginPage({ navigation }: LoginPageProps) {
       />
 
       <CustomButton style={{ marginTop: 24 }} text="로그인" onPress={handleLogin} />
-    </ThemedView>
+    </View>
   );
 }
 

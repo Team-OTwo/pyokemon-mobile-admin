@@ -1,10 +1,9 @@
 import Header from "@/components/header";
-import { ThemedView } from "@/components/ThemedView";
 import { RootStackParamList } from "@/types/navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useCameraPermissions } from "expo-camera";
 import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { ChallengeComplete } from "./_components/challenge-complete";
 import { QRCodeGenerator } from "./_components/qr-code-generator";
@@ -125,10 +124,10 @@ function ChallengeQrPage({ navigation }: ChallengeQrPageProps) {
   };
 
   return (
-    <ThemedView style={styles.screen}>
-      <Header title="챌린지 QR 단계별 테스트" />
+    <View style={styles.screen}>
+      <Header title="입장" />
       {renderCurrentStep()}
-    </ThemedView>
+    </View>
   );
 }
 

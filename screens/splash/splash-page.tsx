@@ -1,7 +1,6 @@
-import { ThemedText } from "@/components/ThemedText";
-import { useThemeColor } from "@/hooks/useThemeColor";
+import { Colors } from "@/constants/Colors";
 import { useEffect, useRef, useState } from "react";
-import { Animated, Easing, SafeAreaView, StyleSheet, View } from "react-native";
+import { Animated, Easing, SafeAreaView, StyleSheet, Text, View } from "react-native";
 
 interface SplashScreenProps {
   onFinish: () => void;
@@ -17,7 +16,7 @@ export default function SplashPage({ onFinish }: SplashScreenProps) {
   const backgroundOpacity = useRef(new Animated.Value(0)).current;
   const adminTextOpacity = useRef(new Animated.Value(0)).current;
 
-  const backgroundColor = useThemeColor({ light: "#FFFFFF", dark: "#151718" }, "background");
+  const backgroundColor = Colors.white
 
   // 타이핑 효과
   useEffect(() => {
@@ -107,10 +106,10 @@ export default function SplashPage({ onFinish }: SplashScreenProps) {
             ]}
           >
             <View style={[styles.logo]}>
-              <ThemedText style={styles.logoTitle}>{displayText}</ThemedText>
+              <Text style={styles.logoTitle}>{displayText}</Text>
             </View>
             <Animated.View style={{ opacity: adminTextOpacity }}>
-              <ThemedText style={styles.adminText}>admin</ThemedText>
+              <Text style={styles.adminText}>admin</Text>
             </Animated.View>
           </Animated.View>
         </View>

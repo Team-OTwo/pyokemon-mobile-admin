@@ -31,12 +31,18 @@ export const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
   }
 
   if (!permission.granted) {
-    return <PermissionRequest onRequestPermission={onRequestPermission} onGoBack={onGoBack} />;
+    return (
+      <PermissionRequest
+        onRequestPermission={onRequestPermission}
+        onGoBack={onGoBack}
+      />
+    );
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.stepTitle}>2단계: QR 코드 스캔</Text>
+      <Text style={styles.stepTitle}>입장 티켓을 스캔해주세요</Text>
+      <Text style={styles.text}>QR을 스캔하면 입장이 완료됩니다.</Text>
       {!scanned ? (
         <View style={styles.scanContainer}>
           <CameraView
@@ -56,7 +62,9 @@ export const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
           <CustomButton text="다시 스캔" onPress={onResetScan} />
         </View>
       )}
-      <CustomButton text="이전 단계로" onPress={onGoBack} />
+      <View style={styles.buttonContainer}>
+        <CustomButton text="이전 단계로" onPress={onGoBack} />
+      </View>
     </View>
   );
 };
@@ -73,7 +81,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 20,
   },
   text: {
     textAlign: "center",
@@ -99,5 +106,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     textAlign: "center",
     color: "#4CAF50",
+  },
+  buttonContainer: {
+    width: "100%",
   },
 });

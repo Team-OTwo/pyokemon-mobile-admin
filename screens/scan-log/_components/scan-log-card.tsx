@@ -1,4 +1,3 @@
-import { ThemedText } from "@/components/ThemedText";
 import Badge from "@/components/ui/badge";
 import { Colors } from "@/constants/Colors";
 import { Ticket } from "@/types/ticket";
@@ -15,25 +14,25 @@ const ScanLogCard = ({ ticket }: ScanLogCardProps) => {
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Text style={styles.infoTitle}>이름</Text>
-          <ThemedText>{ticket.name}</ThemedText>
+          <Text style={styles.infoText}>{ticket.name}</Text>
         </View>
 
         <View style={styles.info}>
           <Text style={styles.infoTitle}>좌석</Text>
-          <ThemedText>{ticket.seat}</ThemedText>
+          <Text style={styles.infoText}>{ticket.seat}</Text>
         </View>
 
         <View style={styles.info}>
           <Text style={styles.infoTitle}>입장 시간</Text>
-          <ThemedText>{ticket.enterTime}</ThemedText>
+          <Text style={styles.infoText}>{ticket.enterTime}</Text>
         </View>
       </View>
 
       <View>
         <Badge
           text={ticket.status}
-          textColor={Colors.light.background}
-          backgroundColor={ticket.status === "입장" ? Colors.light.success : Colors.light.error}
+          textColor={Colors.white}
+          backgroundColor={ticket.status === "입장" ? Colors.success : Colors.error}
         />
       </View>
     </View>
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "space-between",
-    borderColor: Colors.light.gray300,
+    borderColor: Colors.gray300,
     borderWidth: 1,
     borderRadius: 12,
 
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   infoTitle: {
-    color: Colors.light.gray700,
+    color: Colors.gray700,
     fontSize: 16,
     width: 70,
   },

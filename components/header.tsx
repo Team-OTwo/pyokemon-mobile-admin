@@ -1,8 +1,8 @@
+import { globalStyles } from "@/globalStyles";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { ThemedText } from "./ThemedText";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface HeaderProps {
   title: string;
@@ -17,7 +17,7 @@ const Header = ({ title }: HeaderProps) => {
       <TouchableOpacity style={styles.icon} onPress={handleGoBack}>
         <Ionicons name="chevron-back-outline" size={24} color="black" />
       </TouchableOpacity>
-      <ThemedText type="title">{title}</ThemedText>
+      <Text style={globalStyles.title}>{title}</Text>
       <View style={styles.icon}></View>
     </View>
   );

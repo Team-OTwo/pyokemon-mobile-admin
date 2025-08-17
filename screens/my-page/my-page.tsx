@@ -1,5 +1,4 @@
 import Header from '@/components/header';
-import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/Colors';
 import { RootStackParamList } from "@/types/navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -12,7 +11,7 @@ type MyPageProps = {
 
 function MyPage({navigation}:MyPageProps){
   return (
-    <ThemedView style={styles.screen}>
+    <View style={styles.screen}>
       <Header title="마이페이지" />
       <View>
         <TouchableOpacity>
@@ -22,7 +21,7 @@ function MyPage({navigation}:MyPageProps){
           <Text style={[styles.text, styles.dangerous]}>회원탈퇴</Text>
         </TouchableOpacity>
       </View>
-    </ThemedView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   dangerous:{
-    color:Colors.light.error
+    color:Colors.error
   }
 });
 export default MyPage

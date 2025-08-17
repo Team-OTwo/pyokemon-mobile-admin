@@ -1,14 +1,11 @@
 import Header from "@/components/header";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
-import { eventSample as event } from "@/constants/event";
 import { tickets } from "@/constants/ticket";
 import { RootStackParamList } from "@/types/navigation";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import ScanLogCard from "./_components/scan-log-card";
 
 type ScanLogPageProps = {
@@ -18,27 +15,8 @@ type ScanLogPageProps = {
 
 function ScanLogPage({ route, navigation }: ScanLogPageProps) {
   return (
-    <ThemedView style={styles.screen}>
+    <View style={styles.screen}>
       <Header title="스캔 이력 로그" />
-
-      {/* event info */}
-      <ThemedView style={styles.container}>
-        {/* 일시, 장소 */}
-        <View style={styles.info}>
-          <Text style={styles.infoTitle}>일시</Text>
-          <ThemedText>{event.date}</ThemedText>
-        </View>
-
-        <View style={styles.info}>
-          <Text style={styles.infoTitle}>장소</Text>
-          <ThemedText>{event.venue}</ThemedText>
-        </View>
-
-        <View style={styles.info}>
-          <Text style={styles.infoTitle}>발급처</Text>
-          <ThemedText>{event.issuer}</ThemedText>
-        </View>
-      </ThemedView>
 
       <FlatList
         data={tickets}
@@ -47,7 +25,7 @@ function ScanLogPage({ route, navigation }: ScanLogPageProps) {
         }}
         contentContainerStyle={styles.logContainer}
       ></FlatList>
-    </ThemedView>
+    </View>
   );
 }
 
@@ -70,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   infoTitle: {
-    color: Colors.light.gray700,
+    color: Colors.gray700,
     fontSize: 16,
     width: 70,
   },
@@ -78,7 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   subtext: {
-    color: Colors.light.gray700,
+    color: Colors.gray700,
     fontSize: 12,
   },
   qrButton: {

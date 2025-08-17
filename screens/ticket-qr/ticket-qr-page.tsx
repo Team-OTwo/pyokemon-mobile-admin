@@ -1,5 +1,4 @@
 import Header from "@/components/header";
-import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/Colors";
 import { ticket } from "@/constants/ticket";
 import React from "react";
@@ -26,7 +25,7 @@ function TicketQrPage() {
     });
   };
   return (
-    <ThemedView style={styles.screen}>
+    <View style={styles.screen}>
       <Header title="입장 QR 스캔" />
 
       <View>
@@ -43,7 +42,7 @@ function TicketQrPage() {
         <Text>입장 실패</Text>
       </TouchableOpacity>
       <Toast config={toastConfig}/>
-    </ThemedView>
+    </View>
   );
 }
 
@@ -52,8 +51,8 @@ const toastConfig = {
   success: (props) => (
     <BaseToast
       {...props}
-      style={{ borderLeftColor: Colors.light.success }}
-      contentContainerStyle={{ backgroundColor: Colors.light.gray100 }}
+      style={{ borderLeftColor: Colors.success }}
+      contentContainerStyle={{ backgroundColor: Colors.gray100 }}
       text1Style={{
         fontSize: 16,
         fontWeight: 600,
@@ -67,8 +66,8 @@ const toastConfig = {
   error: (props) => (
     <ErrorToast
       {...props}
-      style={{ borderLeftColor: Colors.light.error }}
-      contentContainerStyle={{ backgroundColor: Colors.light.gray100 }}
+      style={{ borderLeftColor: Colors.error }}
+      contentContainerStyle={{ backgroundColor: Colors.gray100 }}
       text1Style={{
         fontSize: 16,
         fontWeight: 600,

@@ -1,12 +1,11 @@
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { eventsSample } from "@/constants/event";
+import { globalStyles } from "@/globalStyles";
 import { Event } from "@/types/event";
 import { RootStackParamList } from "@/types/navigation";
 import Feather from "@expo/vector-icons/Feather";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import { Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import GenreList from "./_components/genre-list";
 import TicketList from "./_components/ticket-list";
 
@@ -36,10 +35,10 @@ function HomePage({ navigation }: HomePageProps) {
   };
 
   return (
-    <ThemedView style={styles.container}>
+    <View style={styles.container}>
       {/* title */}
       <View style={styles.titleContainer}>
-        <ThemedText type="title">공연</ThemedText>
+        <Text style={globalStyles.title}>공연</Text>
         <TouchableOpacity onPress={handleProfilePress}>
           <Feather name="user" size={24} color="black" />
         </TouchableOpacity>
@@ -53,7 +52,7 @@ function HomePage({ navigation }: HomePageProps) {
       {/* ticket list */}
       <TicketList events={filteredTickets} onTicketPress={handleEventPress} />
       {/* </SafeAreaView> */}
-    </ThemedView>
+    </View>
   );
 }
 
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 16,
-    paddingBottom: Platform.OS === "android" ? 50 : 16,
   },
 });
 
