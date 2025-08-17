@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
+import { StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast, { BaseToast } from "react-native-toast-message";
 import { Colors } from "./constants/Colors";
@@ -32,13 +33,14 @@ export default function App() {
   }
 
   const toastConfig = {
-    success: (props: any) => <BaseToast {...props} style={{ borderLeftColor: Colors.light.success }} />,
-    error: (props: any) => <BaseToast {...props} style={{ borderLeftColor: Colors.light.error }} />,
+    success: (props: any) => <BaseToast {...props} style={{ borderLeftColor: Colors.success }} />,
+    error: (props: any) => <BaseToast {...props} style={{ borderLeftColor: Colors.error }} />,
   };
 
   return (
     <>
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
+        <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Home"
