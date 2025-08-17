@@ -33,8 +33,12 @@ export default function App() {
   }
 
   const toastConfig = {
-    success: (props: any) => <BaseToast {...props} style={{ borderLeftColor: Colors.success }} />,
-    error: (props: any) => <BaseToast {...props} style={{ borderLeftColor: Colors.error }} />,
+    success: (props: any) => (
+      <BaseToast {...props} style={{ borderLeftColor: Colors.success }} />
+    ),
+    error: (props: any) => (
+      <BaseToast {...props} style={{ borderLeftColor: Colors.error }} />
+    ),
   };
 
   return (
@@ -44,7 +48,10 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName="Home"
-            screenOptions={{ headerShown: false }}
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: Colors.white },
+            }}
           >
             <Stack.Screen name="Login" component={LoginPage} />
             <Stack.Screen name="Home" component={HomePage} />
