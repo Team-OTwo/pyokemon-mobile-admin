@@ -1,20 +1,20 @@
 import { Event } from "@/types/event";
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
-import TicketCard from "./ticket-card";
+import EventCard from "./event-card";
 
-interface TicketListProps {
+interface EventListProps {
   events: Event[];
-  onTicketPress?: (event: Event) => void;
+  onEventPress?: (event: Event) => void;
 }
 
-function TicketList({ events, onTicketPress }: TicketListProps) {
+function EventList({ events, onEventPress }: EventListProps) {
   return (
     <FlatList
       contentContainerStyle={styles.container}
       data={events}
       renderItem={({ item }) => (
-        <TicketCard event={item} onPress={onTicketPress} />
+        <EventCard event={item} onPress={onEventPress} />
       )}
     />
   );
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TicketList;
+export default EventList;

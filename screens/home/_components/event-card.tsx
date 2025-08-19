@@ -5,12 +5,12 @@ import { Feather } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-interface TicketCardProps {
+interface EventCardProps {
   event: Event;
   onPress?: (event: Event) => void;
 }
 
-function TicketCard({ event, onPress }: TicketCardProps) {
+function EventCard({ event, onPress }: EventCardProps) {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TicketCard;
+export default EventCard;

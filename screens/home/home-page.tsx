@@ -6,20 +6,20 @@ import Feather from "@expo/vector-icons/Feather";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import EventList from "./_components/event-list";
 import GenreList from "./_components/genre-list";
-import TicketList from "./_components/ticket-list";
 
 type HomePageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 };
 
 function HomePage({ navigation }: HomePageProps) {
-  const [tickets, setTickets] = useState<Event[]>([]);
+  const [event, setEvent] = useState<Event[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   useEffect(() => {
     if (eventsSample) {
-      setTickets(eventsSample);
+      setEvent(eventsSample);
     }
   }, []);
 
@@ -28,9 +28,9 @@ function HomePage({ navigation }: HomePageProps) {
     navigation.navigate("Detail", { eventId: event.id });
   };
 
-  const filteredTickets = activeFilter
-    ? tickets.filter((ticket) => ticket.genre === activeFilter)
-    : tickets;
+  const filteredEvent = activeFilter
+    ? event.filter((event) => event.genre === activeFilter)
+    : event;
 
   const handleProfilePress = () => {
     navigation.navigate("MyPage");
@@ -54,9 +54,9 @@ function HomePage({ navigation }: HomePageProps) {
         />
       </View>
 
-      {/* ticket list */}
-      <View style={styles.ticketContainer}>
-        <TicketList events={filteredTickets} onTicketPress={handleEventPress} />
+      {/* event list */}
+      <View style={styles.eventContainer}>
+        <EventList events={filteredEvent} onEventPress={handleEventPress} />
       </View>
     </View>
   );
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   footer: {
     padding: 16,
   },
-  ticketContainer: {
+  eventContainer: {
     flex: 1,
   },
 });
