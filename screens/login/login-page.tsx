@@ -70,8 +70,7 @@ function LoginPage({ navigation }: LoginPageProps) {
       <CustomInput
         value={loginId}
         onChangeText={setLoginId}
-        placeholder="이메일을 입력하세요"
-        keyboardType="email-address"
+        placeholder="아이디를 입력하세요"
         error={errors.loginId}
       />
 
