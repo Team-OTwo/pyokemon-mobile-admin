@@ -13,7 +13,9 @@ function TicketList({ events, onTicketPress }: TicketListProps) {
     <FlatList
       contentContainerStyle={styles.container}
       data={events}
-      renderItem={({ item }) => <TicketCard event={item} onPress={onTicketPress} />}
+      renderItem={({ item }) => (
+        <TicketCard event={item} onPress={onTicketPress} />
+      )}
     />
   );
 }

@@ -28,7 +28,9 @@ function HomePage({ navigation }: HomePageProps) {
     navigation.navigate("Detail", { eventId: event.id });
   };
 
-  const filteredTickets = activeFilter ? tickets.filter((ticket) => ticket.genre === activeFilter) : tickets;
+  const filteredTickets = activeFilter
+    ? tickets.filter((ticket) => ticket.genre === activeFilter)
+    : tickets;
 
   const handleProfilePress = () => {
     navigation.navigate("MyPage");
@@ -46,18 +48,23 @@ function HomePage({ navigation }: HomePageProps) {
 
       {/* genre list*/}
       <View>
-        <GenreList activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+        <GenreList
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+        />
       </View>
 
       {/* ticket list */}
-      <TicketList events={filteredTickets} onTicketPress={handleEventPress} />
-      {/* </SafeAreaView> */}
+      <View style={styles.ticketContainer}>
+        <TicketList events={filteredTickets} onTicketPress={handleEventPress} />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: "#fff",
   },
   titleContainer: {
@@ -93,6 +100,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 16,
+  },
+  ticketContainer: {
+    flex: 1,
   },
 });
 
