@@ -1,7 +1,6 @@
 import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
-import { ThemedText } from "../ThemedText";
 
 interface CustomInputProps {
   label?: string;
@@ -33,13 +32,13 @@ const CustomInput = ({
         style={[
           styles.input,
           {
-            borderColor: isFocused ? Colors.light.primary : Colors.light.gray300,
+            borderColor: isFocused ? Colors.primary : Colors.gray300,
           },
         ]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={Colors.light.gray500}
+        placeholderTextColor={Colors.gray500}
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         autoCapitalize={autoCapitalize}
@@ -47,7 +46,7 @@ const CustomInput = ({
         onBlur={() => setIsFocused(false)}
       />
 
-      {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
+      {error ? <Text style={styles.error}>{error}</Text> : null}
     </View>
   );
 };
@@ -60,15 +59,15 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     borderWidth: 1,
-    borderColor: Colors.light.gray300,
+    borderColor: Colors.gray300,
     borderRadius: 12,
     padding: 8,
     height: 50,
     fontSize: 16,
   },
   error: {
-    fontSize: 12,
-    color: Colors.light.error,
+    fontSize: 14,
+    color: Colors.error,
   },
 });
 export default CustomInput;

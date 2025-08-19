@@ -1,8 +1,11 @@
 import LoginPage from "@/screens/login/login-page";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import React, { useState } from "react";
+import { StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast, { BaseToast } from "react-native-toast-message";
 import { Colors } from "./constants/Colors";
 import ChallengeQrPage from "./screens/challenge-qr/challenge-qr-page";
@@ -14,6 +17,7 @@ import SplashPage from "./screens/splash/splash-page";
 import { RootStackParamList } from "./types/navigation";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const queryClient = new QueryClient();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -31,23 +35,38 @@ export default function App() {
   }
 
   const toastConfig = {
-    success: (props: any) => <BaseToast {...props} style={{ borderLeftColor: Colors.light.success }} />,
-    error: (props: any) => <BaseToast {...props} style={{ borderLeftColor: Colors.light.error }} />,
+    success: (props: any) => (
+      <BaseToast {...props} style={{ borderLeftColor: Colors.success }} />
+    ),
+    error: (props: any) => (
+      <BaseToast {...props} style={{ borderLeftColor: Colors.error }} />
+    ),
   };
 
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={LoginPage} />
-          <Stack.Screen name="Home" component={HomePage} />
-          <Stack.Screen name="MyPage" component={MyPage} />
-          <Stack.Screen name="Detail" component={DetailPage} />
-          <Stack.Screen name="ScanLog" component={ScanLogPage} />
-          <Stack.Screen name="ChallengeQr" component={ChallengeQrPage} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <Toast config={toastConfig} />
+      <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
+        <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
+        <QueryClientProvider  client={queryClient}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: Colors.white },
+            }}
+          >
+            <Stack.Screen name="Login" component={LoginPage} />
+            <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="MyPage" component={MyPage} />
+            <Stack.Screen name="Detail" component={DetailPage} />
+            <Stack.Screen name="ScanLog" component={ScanLogPage} />
+            <Stack.Screen name="ChallengeQr" component={ChallengeQrPage} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <Toast config={toastConfig} />
+        </QueryClientProvider>
+      </SafeAreaView>
     </>
   );
 }

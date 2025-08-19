@@ -1,7 +1,6 @@
-import { ThemedText } from "@/components/ThemedText";
 import { Colors } from "@/constants/Colors";
 import React from "react";
-import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 interface GenreListProps {
   activeFilter: string | null;
@@ -31,14 +30,14 @@ const GenreList = ({ activeFilter, setActiveFilter }: GenreListProps) => {
             style={[
               styles.filterButton,
               activeFilter === item.value && {
-                backgroundColor: Colors.light.primary,
+                backgroundColor: Colors.primary,
               },
             ]}
             onPress={() => setActiveFilter(item.value)}
           >
-            <ThemedText style={[styles.filterText, activeFilter === item.value && { color: "white" }]}>
+            <Text style={[styles.filterText, activeFilter === item.value && { color: "white" }]}>
               {item.label}
-            </ThemedText>
+            </Text>
           </TouchableOpacity>
         )}
         contentContainerStyle={styles.filterList}
@@ -55,15 +54,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   filterButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 6,
+    paddingHorizontal: 18,
+    paddingVertical: 12,
     borderRadius: 100,
     marginRight: 8,
     backgroundColor: "#F3F2F1",
   },
   filterText: {
     fontSize: 14,
-    color: Colors.light.gray700,
+    fontWeight:600,
+    color: Colors.gray700,
   },
 });
 

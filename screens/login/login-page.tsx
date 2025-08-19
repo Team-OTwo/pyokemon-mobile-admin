@@ -1,28 +1,33 @@
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { postLogin } from "@/api/account/fetchers/post-login";
 import CustomButton from "@/components/ui/button";
 import CustomInput from "@/components/ui/input";
+import { Colors } from "@/constants/Colors";
+import { LoginRequest } from "@/types/account";
 import { RootStackParamList } from "@/types/navigation";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { Alert, Platform, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 
 type LoginPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
 };
 
 function LoginPage({ navigation }: LoginPageProps) {
-  const [email, setEmail] = useState<string>("");
+  const [loginId, setLoginId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ loginId?: string; password?: string }>(
+    {}
+  );
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const validateForm = (): boolean => {
-    const newErrors: { email?: string; password?: string } = {};
+    const newErrors: { loginId?: string; password?: string } = {};
 
-    if (!email) {
-      newErrors.email = "이메일을 입력해주세요";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "올바른 이메일 형식이 아닙니다";
+    if (!loginId) {
+      newErrors.loginId = "아이디를 입력해주세요";
     }
 
     if (!password) {
@@ -35,29 +40,47 @@ function LoginPage({ navigation }: LoginPageProps) {
     return Object.keys(newErrors).length === 0;
   };
 
+  const loginMutation = useMutation({
+    mutationFn: (data: LoginRequest) => postLogin(data),
+    onSuccess: async (response) => {
+      if (response?.success) {
+        const { accessToken, refreshToken } = response.data;
+        if (accessToken) await AsyncStorage.setItem("accessToken", accessToken);
+        if (refreshToken)
+          await AsyncStorage.setItem("refreshToken", refreshToken);
+
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "Home" }], // 홈 화면만 스택에 남김
+          })
+        );
+      } else {
+        setErrorMessage(response?.message || "로그인 실패");
+      }
+    },
+    onError: (error) => {
+      console.error("Login failed:", error);
+      Alert.alert("로그인 오류", "로그인 중 문제가 발생했습니다.");
+    },
+  });
+
   const handleLogin = async () => {
     if (!validateForm()) return;
 
-    try {
-      // const res = await restful("POST", "/auth/login", { email, password });
-      // await AsyncStorage.setItem("token", res.data.access.token);
-      navigation.replace("Home");
-    } catch (error) {
-      Alert.alert("오류", "로그인 중 문제가 발생했습니다.");
-    }
+    loginMutation.mutate({ loginId, password });
   };
   return (
-    <ThemedView style={styles.screen}>
+    <View style={styles.screen}>
       <View style={styles.header}>
-        <ThemedText style={styles.title}>Pyokemon</ThemedText>
+        <Text style={styles.title}>Pyokemon</Text>
       </View>
 
       <CustomInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder="이메일을 입력하세요"
-        keyboardType="email-address"
-        error={errors.email}
+        value={loginId}
+        onChangeText={setLoginId}
+        placeholder="아이디를 입력하세요"
+        error={errors.loginId}
       />
 
       <CustomInput
@@ -68,19 +91,24 @@ function LoginPage({ navigation }: LoginPageProps) {
         error={errors.password}
       />
 
-      <CustomButton style={{ marginTop: 24 }} text="로그인" onPress={handleLogin} />
-    </ThemedView>
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+
+      <CustomButton
+        style={{ marginTop: 24 }}
+        text="로그인"
+        onPress={handleLogin}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
+    paddingTop: 150,
     paddingHorizontal: 16,
   },
   header: {
-    marginBottom: Platform.OS === "ios" ? 24 : 32,
     alignItems: "center",
   },
   title: {
@@ -90,6 +118,10 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     lineHeight: 40,
     letterSpacing: 1,
+  },
+  error: {
+    color: Colors.error,
+    fontSize: 14,
   },
 });
 export default LoginPage;
