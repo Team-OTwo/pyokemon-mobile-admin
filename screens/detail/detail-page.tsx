@@ -4,7 +4,6 @@ import { Colors } from "@/constants/Colors";
 import { eventsSample } from "@/constants/event";
 import { globalStyles } from "@/globalStyles";
 import { RootStackParamList } from "@/types/navigation";
-import { Feather } from "@expo/vector-icons";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
@@ -32,28 +31,6 @@ function DetailPage({ route, navigation }: DetailPageProps) {
 
       {/* content */}
       <View style={styles.container}>
-        <View style={styles.badges}>
-          <Text
-            style={{
-              color:
-                event.status === "입장중"
-                  ? Colors.success
-                  : event.status === "입장전"
-                  ? Colors.gray700
-                  : Colors.error,
-              fontWeight: 600,
-            }}
-          >
-            {event.status}
-          </Text>
-          {event.status === "입장중" && (
-            <Feather name="check-circle" size={16} color={Colors.success} />
-          )}
-          {event.status === "만료" && (
-            <Feather name="x-circle" size={16} color={Colors.error} />
-          )}
-        </View>
-
         {/* title */}
         <Text style={[styles.title, globalStyles.title]}>{event?.title}</Text>
 
@@ -69,16 +46,12 @@ function DetailPage({ route, navigation }: DetailPageProps) {
             <Text style={styles.infoText}>{event.venue}</Text>
           </View>
 
-          <View style={styles.info}>
-            <Text style={styles.infoTitle}>발급처</Text>
-            <Text style={styles.infoText}>{event.issuer}</Text>
-          </View>
         </View>
       </View>
       <View style={styles.qrButton}>
         <CustomButton text="입장 QR 생성" onPress={handleQrButtonPress} />
         <CustomButton
-          textColor={Colors.gray500}
+          textColor={Colors.gray700}
           borderColor={Colors.gray300}
           backgroundColor={Colors.white}
           text="스캔 이력 확인"
@@ -101,11 +74,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   title: {
-    paddingVertical: 12,
+    marginBottom:24,
     borderBottomColor: Colors.gray100,
   },
   infoContainer: {
-    gap: 6,
+    gap: 12,
     marginBottom: 24,
     borderColor: Colors.gray300,
     borderWidth: 1,
