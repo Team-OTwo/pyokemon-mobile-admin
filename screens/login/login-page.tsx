@@ -5,6 +5,7 @@ import { Colors } from "@/constants/Colors";
 import { LoginRequest } from "@/types/account";
 import { RootStackParamList } from "@/types/navigation";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { CommonActions } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
@@ -17,7 +18,9 @@ type LoginPageProps = {
 function LoginPage({ navigation }: LoginPageProps) {
   const [loginId, setLoginId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errors, setErrors] = useState<{ loginId?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ loginId?: string; password?: string }>(
+    {}
+  );
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const validateForm = (): boolean => {
@@ -41,11 +44,17 @@ function LoginPage({ navigation }: LoginPageProps) {
     mutationFn: (data: LoginRequest) => postLogin(data),
     onSuccess: async (response) => {
       if (response?.success) {
-        const { accessToken, refreshToken} = response.data;
+        const { accessToken, refreshToken } = response.data;
         if (accessToken) await AsyncStorage.setItem("accessToken", accessToken);
-        if (refreshToken) await AsyncStorage.setItem("refreshToken", refreshToken);
+        if (refreshToken)
+          await AsyncStorage.setItem("refreshToken", refreshToken);
 
-        navigation.replace("Home");
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "Home" }], // 홈 화면만 스택에 남김
+          })
+        );
       } else {
         setErrorMessage(response?.message || "로그인 실패");
       }
@@ -82,7 +91,7 @@ function LoginPage({ navigation }: LoginPageProps) {
         error={errors.password}
       />
 
-      {errorMessage?<Text style={styles.error}>{errorMessage}</Text>:null}
+      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
 
       <CustomButton
         style={{ marginTop: 24 }}
@@ -96,7 +105,7 @@ function LoginPage({ navigation }: LoginPageProps) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    paddingTop:150,
+    paddingTop: 150,
     paddingHorizontal: 16,
   },
   header: {
@@ -110,9 +119,9 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     letterSpacing: 1,
   },
-  error:{
-    color:Colors.error,
-    fontSize:14,
-  }
+  error: {
+    color: Colors.error,
+    fontSize: 14,
+  },
 });
 export default LoginPage;

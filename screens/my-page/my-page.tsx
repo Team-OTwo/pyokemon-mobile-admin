@@ -6,7 +6,13 @@ import { RootStackParamList } from "@/types/navigation";
 import { CommonActions } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
-import { Modal as RNModal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Modal as RNModal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 type MyPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "MyPage">;
@@ -18,21 +24,21 @@ function MyPage({ navigation }: MyPageProps) {
 
     // 스택 초기화하고 Login으로 가기
     navigation.dispatch(
-    CommonActions.reset({
-      index: 0,
-      routes: [{ name: "Login" }],
-    })
-  );
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "Login" }],
+      })
+    );
   };
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <View style={styles.screen}>
       <Header title="마이페이지" />
       <View>
-        <TouchableOpacity>
-          <Text style={styles.logoutText} onPress={()=>setOpen(true)}>
+        <TouchableOpacity style={styles.button} onPress={() => setOpen(true)}>
+          <Text style={styles.logoutText}>
             로그아웃
           </Text>
         </TouchableOpacity>
@@ -60,12 +66,14 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
   },
-  logoutText: {
+  button: {
     paddingVertical: 16,
     paddingHorizontal: 24,
+  },
+  logoutText: {
     fontSize: 16,
     color: Colors.error,
-    fontWeight:500,
+    fontWeight: 500,
   },
   dangerous: {
     color: Colors.error,
@@ -77,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "100%",
     width: "100%",
-    backgroundColor:'rgba(0,0,0,0.6)'
+    backgroundColor: "rgba(0,0,0,0.6)",
   },
 });
 export default MyPage;
