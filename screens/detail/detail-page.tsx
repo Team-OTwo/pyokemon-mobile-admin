@@ -1,12 +1,12 @@
+import { useGetEventDetailQuery } from "@/api/event/queries/use-get-event-detail-query";
 import Header from "@/components/header";
 import CustomButton from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
-import { eventsSample } from "@/constants/event";
 import { globalStyles } from "@/globalStyles";
 import { RootStackParamList } from "@/types/navigation";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 type DetailPageProps = {
@@ -16,8 +16,9 @@ type DetailPageProps = {
 
 function DetailPage({ route, navigation }: DetailPageProps) {
   const { eventId } = route.params;
-  const [event, setEvent]: any = useState(eventsSample.find((event) => event.id === eventId));
 
+  const { data: event, isLoading, error } = useGetEventDetailQuery(Number(eventId))
+  
   const handleLogPress = () => {
     navigation.navigate("ScanLog", { eventId });
   };
@@ -38,12 +39,12 @@ function DetailPage({ route, navigation }: DetailPageProps) {
         <View style={styles.infoContainer}>
           <View style={styles.info}>
             <Text style={styles.infoTitle}>일시</Text>
-            <Text style={styles.infoText}>{event.date}</Text>
+            <Text style={styles.infoText}>{event?.eventDate}</Text>
           </View>
 
           <View style={styles.info}>
             <Text style={styles.infoTitle}>장소</Text>
-            <Text style={styles.infoText}>{event.venue}</Text>
+            <Text style={styles.infoText}>{event?.venueName}</Text>
           </View>
 
         </View>
