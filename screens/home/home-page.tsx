@@ -1,10 +1,10 @@
-import { eventsSample } from "@/constants/event";
+import { useGetEventListQuery } from "@/api/event/queries/use-get-event-list-query";
 import { globalStyles } from "@/globalStyles";
 import { Event } from "@/types/event";
 import { RootStackParamList } from "@/types/navigation";
 import Feather from "@expo/vector-icons/Feather";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import EventList from "./_components/event-list";
 import GenreList from "./_components/genre-list";
@@ -14,23 +14,33 @@ type HomePageProps = {
 };
 
 function HomePage({ navigation }: HomePageProps) {
-  const [event, setEvent] = useState<Event[]>([]);
+  // const [event, setEvent] = useState<Event[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (eventsSample) {
-      setEvent(eventsSample);
-    }
-  }, []);
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useGetEventListQuery();
+
+  const events: Event[] = useMemo(() => {
+    return data?.pages.flatMap((page) => page.events) ?? [];
+  }, [data]);
+
+  const filteredEvents = useMemo(() => {
+    return activeFilter
+      ? events.filter((event: Event) => event.genre === activeFilter)
+      : events;
+  }, [events, activeFilter]);
 
   const handleEventPress = (event: Event) => {
     // 티켓 상세 페이지로 이동
-    navigation.navigate("Detail", { eventId: event.id });
+    navigation.navigate("Detail", { eventId: event.eventId });
   };
-
-  const filteredEvent = activeFilter
-    ? event.filter((event) => event.genre === activeFilter)
-    : event;
 
   const handleProfilePress = () => {
     navigation.navigate("MyPage");
@@ -56,7 +66,18 @@ function HomePage({ navigation }: HomePageProps) {
 
       {/* event list */}
       <View style={styles.eventContainer}>
-        <EventList events={filteredEvent} onEventPress={handleEventPress} />
+        {isLoading ? (
+          <View><Text>loading...</Text></View>
+        ) : (
+          <EventList
+            events={filteredEvents}
+            onEventPress={handleEventPress}
+            onRefreshEvents={refetch}
+            onLoadMore={fetchNextPage}
+            isLoadingMore={isFetchingNextPage}
+            hasNextPage={hasNextPage}
+          />
+        )}
       </View>
     </View>
   );
