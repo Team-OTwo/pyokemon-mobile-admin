@@ -1,4 +1,5 @@
 import { useGetEventListQuery } from "@/api/event/queries/use-get-event-list-query";
+import Loading from "@/components/ui/loading";
 import { globalStyles } from "@/globalStyles";
 import { Event } from "@/types/event";
 import { RootStackParamList } from "@/types/navigation";
@@ -14,7 +15,6 @@ type HomePageProps = {
 };
 
 function HomePage({ navigation }: HomePageProps) {
-  // const [event, setEvent] = useState<Event[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   const {
@@ -67,7 +67,7 @@ function HomePage({ navigation }: HomePageProps) {
       {/* event list */}
       <View style={styles.eventContainer}>
         {isLoading ? (
-          <View><Text>loading...</Text></View>
+          <Loading />
         ) : (
           <EventList
             events={filteredEvents}

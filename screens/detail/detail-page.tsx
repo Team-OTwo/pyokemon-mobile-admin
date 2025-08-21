@@ -1,6 +1,7 @@
 import { useGetEventDetailQuery } from "@/api/event/queries/use-get-event-detail-query";
 import Header from "@/components/header";
 import CustomButton from "@/components/ui/button";
+import Loading from "@/components/ui/loading";
 import { Colors } from "@/constants/Colors";
 import { globalStyles } from "@/globalStyles";
 import { RootStackParamList } from "@/types/navigation";
@@ -34,7 +35,7 @@ function DetailPage({ route, navigation }: DetailPageProps) {
   };
 
   if(isLoading || !event){
-    return(<Text>loading...</Text>)
+    return(<Loading />)
   }
 
   return (
