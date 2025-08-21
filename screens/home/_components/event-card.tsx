@@ -2,15 +2,17 @@ import { Colors } from "@/constants/Colors";
 import { globalStyles } from "@/globalStyles";
 import { Event } from "@/types/event";
 import { Feather } from "@expo/vector-icons";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-interface TicketCardProps {
+interface EventCardProps {
   event: Event;
   onPress?: (event: Event) => void;
 }
 
-function TicketCard({ event, onPress }: TicketCardProps) {
+function EventCard({ event, onPress }: EventCardProps) {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -18,43 +20,22 @@ function TicketCard({ event, onPress }: TicketCardProps) {
     >
       {/* title */}
       <View style={styles.titleContainer}>
-        <Text style={globalStyles.title}>{event.title}</Text>
-        <View style={styles.statusContainer}>
-          <Text
-            style={[
-              {color:
-                event.status === "입장중" ? Colors.success : Colors.gray700, fontWeight:600}
-            ]}
-          >
-            {event.status}
-          </Text>
-            {event.status === "입장중" && (
-              <Feather
-                style={{ marginLeft: 6 }}
-                name="check-circle"
-                size={16}
-                color={Colors.success}
-              />
-            )}
-            {event.status === "만료" && (
-              <Feather
-                style={{ marginLeft: 6 }}
-                name="x-circle"
-                size={16}
-                color={Colors.error}
-              />
-            )}
-        </View>
+        <Text style={globalStyles.title}>{event?.title}</Text>
       </View>
 
-      {/* 일시, 장소 */}
-      <View style={styles.info}>
-        <Feather name="map-pin" size={16} color={Colors.gray700} />
-        <Text style={styles.infoText}>{event.venue}</Text>
-      </View>
-      <View style={styles.info}>
-        <Feather name="calendar" size={16} color={Colors.gray700} />
-        <Text style={styles.infoText}>{event.date}</Text>
+      <View style={styles.infoContainer}>
+        {/* 일시, 장소 */}
+        <View style={styles.info}>
+          <Feather name="map-pin" size={16} color={Colors.gray700} />
+          <Text style={styles.infoText}>{event?.venueName}</Text>
+        </View>
+
+        <View style={styles.info}>
+          <Feather name="calendar" size={16} color={Colors.gray700} />
+          <Text style={styles.infoText}>
+            {format(event?.eventDate, "yyyy.MM.dd(iii) HH:mm", { locale: ko })}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -86,6 +67,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
+  infoContainer:{
+    flexDirection:'column',
+    gap:8,
+  },
   info: {
     flex: 1,
     gap: 10,
@@ -107,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TicketCard;
+export default EventCard;

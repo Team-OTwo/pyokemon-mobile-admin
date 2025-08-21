@@ -1,34 +1,46 @@
-import { eventsSample } from "@/constants/event";
+import { useGetEventListQuery } from "@/api/event/queries/use-get-event-list-query";
+import Loading from "@/components/ui/loading";
 import { globalStyles } from "@/globalStyles";
 import { Event } from "@/types/event";
 import { RootStackParamList } from "@/types/navigation";
 import Feather from "@expo/vector-icons/Feather";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import EventList from "./_components/event-list";
 import GenreList from "./_components/genre-list";
-import TicketList from "./_components/ticket-list";
 
 type HomePageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Home">;
 };
 
 function HomePage({ navigation }: HomePageProps) {
-  const [tickets, setTickets] = useState<Event[]>([]);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (eventsSample) {
-      setTickets(eventsSample);
-    }
-  }, []);
+  const {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    refetch,
+  } = useGetEventListQuery();
+
+  const events: Event[] = useMemo(() => {
+    return data?.pages.flatMap((page) => page.events) ?? [];
+  }, [data]);
+
+  const filteredEvents = useMemo(() => {
+    return activeFilter
+      ? events.filter((event: Event) => event.genre === activeFilter)
+      : events;
+  }, [events, activeFilter]);
 
   const handleEventPress = (event: Event) => {
     // 티켓 상세 페이지로 이동
-    navigation.navigate("Detail", { eventId: event.id });
+    navigation.navigate("Detail", { eventId: event.eventId });
   };
-
-  const filteredTickets = activeFilter ? tickets.filter((ticket) => ticket.genre === activeFilter) : tickets;
 
   const handleProfilePress = () => {
     navigation.navigate("MyPage");
@@ -46,18 +58,34 @@ function HomePage({ navigation }: HomePageProps) {
 
       {/* genre list*/}
       <View>
-        <GenreList activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+        <GenreList
+          activeFilter={activeFilter}
+          setActiveFilter={setActiveFilter}
+        />
       </View>
 
-      {/* ticket list */}
-      <TicketList events={filteredTickets} onTicketPress={handleEventPress} />
-      {/* </SafeAreaView> */}
+      {/* event list */}
+      <View style={styles.eventContainer}>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <EventList
+            events={filteredEvents}
+            onEventPress={handleEventPress}
+            onRefreshEvents={refetch}
+            onLoadMore={fetchNextPage}
+            isLoadingMore={isFetchingNextPage}
+            hasNextPage={hasNextPage}
+          />
+        )}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: "#fff",
   },
   titleContainer: {
@@ -93,6 +121,9 @@ const styles = StyleSheet.create({
   },
   footer: {
     padding: 16,
+  },
+  eventContainer: {
+    flex: 1,
   },
 });
 

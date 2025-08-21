@@ -1,9 +1,7 @@
 export type Event = {
-  id: string;
+  eventId: string;
   title: string;
-  date: string;
-  venue: string;
-  issuer: string;
-  status: "입장중" | "입장전" | "만료";
-  genre: string;
+  eventDate: string;
+  venueName: string;
+  genre:string;
 };
