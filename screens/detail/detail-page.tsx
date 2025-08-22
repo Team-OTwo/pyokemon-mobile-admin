@@ -66,13 +66,6 @@ function DetailPage({ route, navigation }: DetailPageProps) {
       </View>
       <View style={styles.qrButton}>
         <CustomButton text="입장 QR 생성" onPress={handleQrButtonPress} />
-        <CustomButton
-          textColor={Colors.gray700}
-          borderColor={Colors.gray300}
-          backgroundColor={Colors.white}
-          text="스캔 이력 확인"
-          onPress={handleLogPress}
-        />
       </View>
     </View>
   );
