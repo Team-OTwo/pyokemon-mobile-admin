@@ -1,6 +1,8 @@
+import Badge from "@/components/ui/badge";
 import { Colors } from "@/constants/Colors";
 import { globalStyles } from "@/globalStyles";
 import { Event } from "@/types/event";
+import { getDDay } from "@/utils/get-dday";
 import { Feather } from "@expo/vector-icons";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
@@ -13,6 +15,7 @@ interface EventCardProps {
 }
 
 function EventCard({ event, onPress }: EventCardProps) {
+  const dDay = getDDay(new Date(event.eventDate));
   return (
     <TouchableOpacity
       style={styles.container}
@@ -20,20 +23,21 @@ function EventCard({ event, onPress }: EventCardProps) {
     >
       {/* title */}
       <View style={styles.titleContainer}>
-        <Text style={globalStyles.title}>{event?.title}</Text>
+        <Text style={globalStyles.title}>{event.title}</Text>
+      <Badge text={dDay} backgroundColor={Colors.primary50}/>
       </View>
 
       <View style={styles.infoContainer}>
         {/* 일시, 장소 */}
         <View style={styles.info}>
-          <Feather name="map-pin" size={16} color={Colors.gray700} />
-          <Text style={styles.infoText}>{event?.venueName}</Text>
+          <Feather name="map-pin" size={16} color={Colors.primaryDark} />
+          <Text style={styles.infoText}>{event.venueName}</Text>
         </View>
 
         <View style={styles.info}>
-          <Feather name="calendar" size={16} color={Colors.gray700} />
+          <Feather name="calendar" size={16} color={Colors.primaryDark} />
           <Text style={styles.infoText}>
-            {format(event?.eventDate, "yyyy.MM.dd(iii) HH:mm", { locale: ko })}
+            {format(event.eventDate, "yyyy.MM.dd(iii) HH:mm", { locale: ko })}
           </Text>
         </View>
       </View>
@@ -57,16 +61,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  badges: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 6,
-  },
-  statusContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
   infoContainer:{
     flexDirection:'column',
     gap:8,
@@ -75,7 +69,6 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 10,
     flexDirection: "row",
-    alignItems: "center",
   },
   infoTitle: {
     color: Colors.gray700,
@@ -85,10 +78,6 @@ const styles = StyleSheet.create({
   infoText: {
     fontSize: 16,
     paddingBottom:4,
-  },
-  subtext: {
-    color: Colors.gray700,
-    fontSize: 12,
   },
 });
 
