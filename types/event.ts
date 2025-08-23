@@ -4,4 +4,6 @@ export type Event = {
   eventDate: string;
   venueName: string;
   genre:string;
+  ageLimit?: number;
+  thumbnailUrl?: string;
 };
