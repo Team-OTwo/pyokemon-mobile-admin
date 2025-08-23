@@ -1,4 +1,5 @@
 import { useGetEventListQuery } from "@/api/event/queries/use-get-event-list-query";
+import Error from "@/components/ui/error";
 import Loading from "@/components/ui/loading";
 import { globalStyles } from "@/globalStyles";
 import { Event } from "@/types/event";
@@ -39,6 +40,10 @@ function HomePage({ navigation }: HomePageProps) {
   const handleProfilePress = () => {
     navigation.navigate("MyPage");
   };
+
+  if(error){
+    return <Error />
+  }
 
   return (
     <View style={styles.container}>

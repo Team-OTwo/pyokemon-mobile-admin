@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
+import loadingBall from "../../assets/images/loadingBall.png";
 
 
 const Loading = () => {
@@ -26,7 +27,7 @@ const Loading = () => {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={require("../../assets/images/loadingBall.png")}
+        source={loadingBall}
         style={[styles.animatedImage, { transform: [{ rotate: spin }] }]}
         resizeMode="contain"
       />

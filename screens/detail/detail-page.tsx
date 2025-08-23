@@ -2,6 +2,7 @@ import { useGetEventDetailQuery } from "@/api/event/queries/use-get-event-detail
 import HeaderTransparent from "@/components/header-transparent";
 import Badge from "@/components/ui/badge";
 import CustomButton from "@/components/ui/button";
+import Error from "@/components/ui/error";
 import Loading from "@/components/ui/loading";
 import { Colors } from "@/constants/Colors";
 import { globalStyles } from "@/globalStyles";
@@ -31,21 +32,28 @@ function DetailPage({ route, navigation }: DetailPageProps) {
     navigation.navigate("ChallengeQr");
   };
 
-  if(isLoading || !event){
-    return(<Loading />)
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error || !event) {
+    return <Error />;
   }
 
   return (
     <View style={styles.screen}>
-      <HeaderTransparent/>
-
-      <View><Image source={{uri: event.thumbnailUrl}} style={styles.image}></Image></View>
+      <HeaderTransparent />
+      <View>
+        <Image
+          source={{ uri: event.thumbnailUrl }}
+          style={styles.image}
+        ></Image>
+      </View>
       {/* content */}
       <View style={styles.container}>
         <Badge text={event.genre} backgroundColor={Colors.primary20} />
         {/* title */}
         <Text style={[styles.title, globalStyles.title]}>{event.title}</Text>
-
 
         {/* 일시, 장소 */}
         <View style={styles.infoContainer}>
@@ -62,12 +70,13 @@ function DetailPage({ route, navigation }: DetailPageProps) {
             <Text style={styles.infoTitle}>장소</Text>
             <Text style={styles.infoText}>{event.venueName}</Text>
           </View>
-          
+
           <View style={styles.info}>
             <Text style={styles.infoTitle}>연령</Text>
-            <Text style={styles.infoText}>{event.ageLimit === 0 ? "전체 관람가" : event.ageLimit + "세"}</Text>
+            <Text style={styles.infoText}>
+              {event.ageLimit === 0 ? "전체 관람가" : event.ageLimit + "세"}
+            </Text>
           </View>
-          
         </View>
       </View>
       <View style={styles.qrButton}>
@@ -80,7 +89,7 @@ function DetailPage({ route, navigation }: DetailPageProps) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    position:'relative'
+    position: "relative",
   },
   container: {
     padding: 16,
@@ -91,7 +100,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 24,
-    marginTop:8,
+    marginTop: 8,
     borderBottomColor: Colors.gray100,
   },
   infoContainer: {
@@ -125,10 +134,10 @@ const styles = StyleSheet.create({
     gap: 12,
     width: "100%",
   },
-  image:{
-    width:'100%',
-    height:360,
-  }
+  image: {
+    width: "100%",
+    height: 360,
+  },
 });
 
 export default DetailPage;
