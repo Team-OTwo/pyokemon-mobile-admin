@@ -25,17 +25,11 @@ function HomePage({ navigation }: HomePageProps) {
     hasNextPage,
     isFetchingNextPage,
     refetch,
-  } = useGetEventListQuery();
+  } = useGetEventListQuery(activeFilter);
 
   const events: Event[] = useMemo(() => {
     return data?.pages.flatMap((page) => page.events) ?? [];
   }, [data]);
-
-  const filteredEvents = useMemo(() => {
-    return activeFilter
-      ? events.filter((event: Event) => event.genre === activeFilter)
-      : events;
-  }, [events, activeFilter]);
 
   const handleEventPress = (event: Event) => {
     // 티켓 상세 페이지로 이동
@@ -70,7 +64,7 @@ function HomePage({ navigation }: HomePageProps) {
           <Loading />
         ) : (
           <EventList
-            events={filteredEvents}
+            events={events}
             onEventPress={handleEventPress}
             onRefreshEvents={refetch}
             onLoadMore={fetchNextPage}
