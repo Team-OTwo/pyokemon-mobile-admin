@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 6,
     paddingHorizontal:12,
-    borderRadius: 100
+    borderRadius: 100,
+    alignSelf: "flex-start",
   },
   text: {
     fontSize: 14,
