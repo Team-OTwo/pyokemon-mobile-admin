@@ -1,6 +1,8 @@
 import { useGetEventDetailQuery } from "@/api/event/queries/use-get-event-detail-query";
-import Header from "@/components/header";
+import HeaderTransparent from "@/components/header-transparent";
+import Badge from "@/components/ui/badge";
 import CustomButton from "@/components/ui/button";
+import Error from "@/components/ui/error";
 import Loading from "@/components/ui/loading";
 import { Colors } from "@/constants/Colors";
 import { globalStyles } from "@/globalStyles";
@@ -10,7 +12,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 type DetailPageProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Detail">;
@@ -26,26 +28,32 @@ function DetailPage({ route, navigation }: DetailPageProps) {
     error,
   } = useGetEventDetailQuery(Number(eventId));
 
-  const handleLogPress = () => {
-    navigation.navigate("ScanLog", { eventId });
-  };
-
   const handleQrButtonPress = () => {
     navigation.navigate("ChallengeQr");
   };
 
-  if(isLoading || !event){
-    return(<Loading />)
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  if (error || !event) {
+    return <Error />;
   }
 
   return (
     <View style={styles.screen}>
-      <Header title="공연 상세" />
-
+      <HeaderTransparent />
+      <View>
+        <Image
+          source={{ uri: event.thumbnailUrl }}
+          style={styles.image}
+        ></Image>
+      </View>
       {/* content */}
       <View style={styles.container}>
+        <Badge text={event.genre} backgroundColor={Colors.primary20} />
         {/* title */}
-        <Text style={[styles.title, globalStyles.title]}>{event?.title}</Text>
+        <Text style={[styles.title, globalStyles.title]}>{event.title}</Text>
 
         {/* 일시, 장소 */}
         <View style={styles.infoContainer}>
@@ -60,19 +68,19 @@ function DetailPage({ route, navigation }: DetailPageProps) {
 
           <View style={styles.info}>
             <Text style={styles.infoTitle}>장소</Text>
-            <Text style={styles.infoText}>{event?.venueName}</Text>
+            <Text style={styles.infoText}>{event.venueName}</Text>
+          </View>
+
+          <View style={styles.info}>
+            <Text style={styles.infoTitle}>연령</Text>
+            <Text style={styles.infoText}>
+              {event.ageLimit === 0 ? "전체 관람가" : event.ageLimit + "세"}
+            </Text>
           </View>
         </View>
       </View>
       <View style={styles.qrButton}>
         <CustomButton text="입장 QR 생성" onPress={handleQrButtonPress} />
-        <CustomButton
-          textColor={Colors.gray700}
-          borderColor={Colors.gray300}
-          backgroundColor={Colors.white}
-          text="스캔 이력 확인"
-          onPress={handleLogPress}
-        />
       </View>
     </View>
   );
@@ -81,6 +89,7 @@ function DetailPage({ route, navigation }: DetailPageProps) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    position: "relative",
   },
   container: {
     padding: 16,
@@ -91,6 +100,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 24,
+    marginTop: 8,
     borderBottomColor: Colors.gray100,
   },
   infoContainer: {
@@ -123,6 +133,10 @@ const styles = StyleSheet.create({
     bottom: 0,
     gap: 12,
     width: "100%",
+  },
+  image: {
+    width: "100%",
+    height: 360,
   },
 });
 

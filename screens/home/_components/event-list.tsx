@@ -60,7 +60,7 @@ function EventList({ events, onEventPress, onRefreshEvents,  onLoadMore,
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    gap: 16,
+    gap: 24,
   },
   listContent: {
     padding: 16,

@@ -15,7 +15,7 @@ const GenreList = ({ activeFilter, setActiveFilter }: GenreListProps) => {
     { label: "연극", value: "연극" },
     { label: "클래식", value: "클래식" },
     { label: "스포츠", value: "스포츠" },
-    { label: "행사", value: "행사" },
+    { label: "전시회", value: "전시회" },
   ];
 
   return (

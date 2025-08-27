@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import Modal from "@/components/ui/modal";
 import { Colors } from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { CommonActions } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
@@ -35,9 +36,10 @@ function MyPage({ navigation }: MyPageProps) {
 
   return (
     <View style={styles.screen}>
-      <Header title="마이페이지" />
+      <Header title="계정" />
       <View>
         <TouchableOpacity style={styles.button} onPress={() => setOpen(true)}>
+          <MaterialIcons name="logout" size={24} color={Colors.error} />
           <Text style={styles.logoutText}>
             로그아웃
           </Text>
@@ -69,6 +71,9 @@ const styles = StyleSheet.create({
   button: {
     paddingVertical: 16,
     paddingHorizontal: 24,
+    flexDirection:'row',
+    alignItems:'center',
+    gap:12,
   },
   logoutText: {
     fontSize: 16,

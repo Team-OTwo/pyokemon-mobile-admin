@@ -3,7 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const fetchEventlist = async (
   cursorId?: number,
-  cursorDate?: number
+  cursorDate?: number,
+  genre?:string|null,
 ) => {
   try {
     const accessToken = await AsyncStorage.getItem("accessToken");
@@ -13,7 +14,7 @@ export const fetchEventlist = async (
     }
 
     const res = await eventClient.get(`/api/events/tenant/app`, {
-      params: { cursorId, cursorDate },
+      params: { cursorId, cursorDate, genre },
     });
 
     console.log(res.data.data);
