@@ -4,7 +4,6 @@ import Modal from "@/components/ui/modal";
 import { Colors } from "@/constants/Colors";
 import { RootStackParamList } from "@/types/navigation";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { CommonActions } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useState } from "react";
 import {
@@ -22,14 +21,7 @@ type MyPageProps = {
 function MyPage({ navigation }: MyPageProps) {
   const handleLogout = () => {
     postLogout();
-
-    // 스택 초기화하고 Login으로 가기
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "Login" }],
-      })
-    );
+    setOpen(false);
   };
 
   const [open, setOpen] = useState(false);
