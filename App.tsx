@@ -1,3 +1,4 @@
+import { navigationRef } from "@/navigation/navigationRef";
 import LoginPage from "@/screens/login/login-page";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,6 +17,7 @@ import MyPage from "./screens/my-page/my-page";
 import ScanLogPage from "./screens/scan-log/scan-log-page";
 import SplashPage from "./screens/splash/splash-page";
 import { RootStackParamList } from "./types/navigation";
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const queryClient = new QueryClient();
@@ -70,7 +72,7 @@ export default function App() {
       <SafeAreaView style={{ flex: 1, backgroundColor: Colors.white }}>
         <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
         <QueryClientProvider client={queryClient}>
-          <NavigationContainer>
+          <NavigationContainer ref={navigationRef}>
             <Stack.Navigator
               initialRouteName={initialRoute}
               screenOptions={{
