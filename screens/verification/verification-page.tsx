@@ -112,7 +112,6 @@ const VerificationPage = ({ navigation }: VerificationPageProps) => {
       onRequestPermission={requestPermissionAgain}
       onGoBack={() => setCurrentStep("scan")}
       onBarcodeScanned={handleBarCodeScanned}
-      onResetScan={() => setScanned(false)}
     />
   );
 

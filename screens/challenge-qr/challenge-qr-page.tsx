@@ -95,16 +95,15 @@ function ChallengeQrPage({ navigation }: ChallengeQrPageProps) {
     setScanned(false);
   };
 
-  const renderGenerateStep = () => <QRCodeGenerator qrCode={qrCode} onNextStep={() => setCurrentStep("scan")} />;
+  const renderGenerateStep = () => <QRCodeGenerator qrCode={qrCode} onGoBack={() => setCurrentStep("scan")}/>;
 
   const renderScanStep = () => (
     <QRCodeScanner
       permission={permission}
       scanned={scanned}
       onRequestPermission={requestPermissionAgain}
-      onGoBack={() => setCurrentStep("generate")}
+      onGoBack={() => setCurrentStep("scan")}
       onBarcodeScanned={handleBarCodeScanned}
-      onResetScan={() => setScanned(false)}
     />
   );
 
@@ -112,14 +111,14 @@ function ChallengeQrPage({ navigation }: ChallengeQrPageProps) {
 
   const renderCurrentStep = () => {
     switch (currentStep) {
-      case "generate":
-        return renderGenerateStep();
       case "scan":
         return renderScanStep();
+      case "generate":
+        return renderGenerateStep();
       case "complete":
         return renderCompleteStep();
       default:
-        return renderGenerateStep();
+        return renderScanStep();
     }
   };
 

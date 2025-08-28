@@ -1,4 +1,3 @@
-import CustomButton from "@/components/ui/button";
 import { CameraView } from "expo-camera";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -11,7 +10,6 @@ interface QRCodeScannerProps {
   onRequestPermission: () => void;
   onGoBack: () => void;
   onBarcodeScanned: (data: { type: string; data: string }) => void;
-  onResetScan: () => void;
 }
 
 export const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
@@ -20,7 +18,6 @@ export const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
   onRequestPermission,
   onGoBack,
   onBarcodeScanned,
-  onResetScan,
 }) => {
   if (!permission) {
     return (
@@ -41,9 +38,24 @@ export const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
 
   return (
     <View style={styles.container}>
-      <Text style={styles.stepTitle}>입장 티켓을 스캔해주세요</Text>
-      <Text style={styles.text}>QR을 스캔하면 입장이 완료됩니다.</Text>
-      {!scanned ? (
+      <Text style={styles.stepTitle}>입장객의 QR을 스캔해주세요</Text>
+
+      {!scanned && (
+        <View style={styles.scanContainer}>
+          <CameraView
+            style={styles.scanner}
+            facing="back"
+            onBarcodeScanned={onBarcodeScanned}
+            barcodeScannerSettings={{
+              barcodeTypes: ["qr"],
+            }}
+          >
+            <ScanOverlay />
+          </CameraView>
+        </View>
+      )}
+
+      {/* {!scanned ? (
         <View style={styles.scanContainer}>
           <CameraView
             style={styles.scanner}
@@ -61,10 +73,10 @@ export const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
           <Text style={styles.resultText}>QR 코드 스캔 완료!</Text>
           <CustomButton text="다시 스캔" onPress={onResetScan} />
         </View>
-      )}
-      <View style={styles.buttonContainer}>
-        <CustomButton text="이전 단계로" onPress={onGoBack} />
-      </View>
+      )} */}
+      {/* <View style={styles.buttonContainer}>
+        <CustomButton text="다음" onPress={onNextStep} />
+      </View> */}
     </View>
   );
 };
@@ -72,7 +84,6 @@ export const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
     gap: 32,
     paddingHorizontal: 20,
@@ -81,6 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
+    marginVertical:56
   },
   text: {
     textAlign: "center",
@@ -91,7 +103,6 @@ const styles = StyleSheet.create({
     height: 300,
     borderRadius: 12,
     overflow: "hidden",
-    marginBottom: 20,
   },
   scanner: {
     flex: 1,
