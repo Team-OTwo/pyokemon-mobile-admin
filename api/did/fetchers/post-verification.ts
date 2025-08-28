@@ -1,0 +1,18 @@
+import { didClient } from "@/api/client";
+import { verificationRequest } from "@/types/verification";
+
+export const postVerification = async (data: verificationRequest) => {
+  try {
+    console.log(data);
+    const response = await didClient.post("/api/verifications", data);
+    console.log(response.data);
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.data) {
+      console.log("Server response:", error.response.data);
+      return error.response.data;
+    }
+    console.log(error);
+    throw error;
+  }
+};
