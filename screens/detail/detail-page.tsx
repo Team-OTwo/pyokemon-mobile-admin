@@ -29,7 +29,7 @@ function DetailPage({ route, navigation }: DetailPageProps) {
   } = useGetEventDetailQuery(Number(eventId));
 
   const handleQrButtonPress = () => {
-    navigation.navigate("ChallengeQr");
+    navigation.navigate("Verification");
   };
 
   if (isLoading) {
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   qrButton: {
     position: "absolute",
     padding: 16,
-    bottom: 0,
+    bottom: 24,
     gap: 12,
     width: "100%",
   },

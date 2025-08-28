@@ -9,4 +9,5 @@ export type RootStackParamList = {
   ChallengeQr: undefined;
   TicketQR: { ticketId: string };
   QrScan: undefined;
+  Verification:undefined;
 };
