@@ -6,12 +6,14 @@ import QRCode from "react-native-qrcode-svg";
 interface QRCodeGeneratorProps {
   qrCode: string;
   onGoBack: () => void;
+  presExId: string;
 }
 
 export const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({
   qrCode,
   onGoBack,
 }) => {
+  console.log("qrcode: " + qrCode);
   return (
     <View style={styles.container}>
       <Text style={styles.stepTitle}>관람객에게 QR을 제시해주세요</Text>

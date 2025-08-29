@@ -5,9 +5,7 @@ import { useCameraPermissions } from "expo-camera";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Toast from "react-native-toast-message";
-import { ChallengeComplete } from "./_components/challenge-complete";
-import { QRCodeGenerator } from "./_components/qr-code-generator";
-import { QRCodeScanner } from "./_components/qr-code-scanner";
+
 
 interface ChallengeQrPageProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "ChallengeQr">;
@@ -95,19 +93,13 @@ function ChallengeQrPage({ navigation }: ChallengeQrPageProps) {
     setScanned(false);
   };
 
-  const renderGenerateStep = () => <QRCodeGenerator qrCode={qrCode} onGoBack={() => setCurrentStep("scan")}/>;
+  const renderGenerateStep = () => <View></View>;
 
   const renderScanStep = () => (
-    <QRCodeScanner
-      permission={permission}
-      scanned={scanned}
-      onRequestPermission={requestPermissionAgain}
-      onGoBack={() => setCurrentStep("scan")}
-      onBarcodeScanned={handleBarCodeScanned}
-    />
+ <View></View>
   );
 
-  const renderCompleteStep = () => <ChallengeComplete onReset={resetToGenerate} />;
+  const renderCompleteStep = () => <View></View>;
 
   const renderCurrentStep = () => {
     switch (currentStep) {
