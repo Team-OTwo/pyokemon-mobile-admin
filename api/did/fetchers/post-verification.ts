@@ -1,7 +1,9 @@
 import { didClient } from "@/api/client";
-import { verificationRequest } from "@/types/verification";
+import { VerificationRequest, VerificationResponse } from "@/types/verification";
 
-export const postVerification = async (data: verificationRequest) => {
+export const postVerification = async (
+  data: VerificationRequest
+): Promise<VerificationResponse> => {
   try {
     console.log(data);
     const response = await didClient.post("/api/verifications", data);

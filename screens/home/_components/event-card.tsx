@@ -18,7 +18,7 @@ function EventCard({ event, onPress }: EventCardProps) {
   const dDay = getDDay(new Date(event.eventDate));
   return (
     <TouchableOpacity
-      style={[styles.container]}
+      style={styles.container}
       onPress={() => onPress && onPress(event)}
     >
       {/* title */}
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 12,
     shadowColor: "#222",
+    shadowOffset: { width: 0, height: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.08,
     elevation: 4,
