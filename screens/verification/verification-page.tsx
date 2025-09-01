@@ -1,4 +1,3 @@
-import { postVerification } from "@/api/did/fetchers/post-verification";
 import { useGetVerificationResult } from "@/api/did/queries/use-get-verification-result";
 import Header from "@/components/header";
 import { RootStackParamList } from "@/types/navigation";
@@ -58,11 +57,13 @@ const VerificationPage = ({ navigation }: VerificationPageProps) => {
     }
   };
 
+  // 사용자 입장 완료할 때까지 polling
   const { data, isSuccess } = useGetVerificationResult(presExId, {
     enabled: presExId !== "" && currentStep === "generate",
     refetchInterval: 2000,
   });
 
+  // qr 스캔 후
   const handleBarCodeScanned = async ({
     data,
   }: {
@@ -75,15 +76,15 @@ const VerificationPage = ({ navigation }: VerificationPageProps) => {
     console.log("스캔된 데이터:", data);
 
     try {
-      const parsed = JSON.parse(data);
-      const { jwt, bookingId } = parsed;
+      // const parsed = JSON.parse(data);
+      // const { jwt, bookingId } = parsed;
 
-      console.log("스캔된 JWT:", jwt);
-      console.log("스캔된 Booking ID:", bookingId);
-      // const jwt = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NTY0MzM4NTcsImV4cCI6MTc1NjQzNTY1N30.P4uMs7TY-EDDM5RU4_6paeaU_fXq-qdJbE6kt7FJjVw";
-      // const bookingId = "2";
+      // console.log("스캔된 JWT:", jwt);
+      // console.log("스캔된 Booking ID:", bookingId);
+      const jwt = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NTY0MzM4NTcsImV4cCI6MTc1NjQzNTY1N30.P4uMs7TY-EDDM5RU4_6paeaU_fXq-qdJbE6kt7FJjVw";
+      const bookingId = "2";
       
-      const res = await postVerification({ jwt, bookingId });
+      // const res = await postVerification({ jwt, bookingId });
       // console.log("res" + res);
 
       // // qr 데이터에 verify_invi_url 담기
