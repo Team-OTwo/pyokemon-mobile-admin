@@ -4,7 +4,7 @@ const ENV: Environment = (process.env.EXPO_PUBLIC_ENVIRONMENT as Environment) ||
 
 // 게이트웨이 URL 상수
 const GATEWAY_URL: Record<Environment, string> = {
-  local: "http://192.168.0.29:8087",
+  local: "http://192.168.0.32:8087",
   dev: "https://pyokemon.synology.me:8087",
 }
 

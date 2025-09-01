@@ -12,7 +12,7 @@ export const postVerification = async (
   } catch (error: any) {
     if (error.response?.data) {
       console.log("Server response:", error.response.data);
-      return error.response.data;
+      throw new Error(error.response.data.message || "Server error");
     }
     console.log(error);
     throw error;

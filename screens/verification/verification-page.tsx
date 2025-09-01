@@ -95,7 +95,6 @@ const VerificationPage = ({ navigation }: VerificationPageProps) => {
       Toast.show({
         type: "error",
         text1: "QR 코드 불일치",
-        text2: `스캔된 값: ${data}`,
         position: "bottom",
         visibilityTime: 2000,
         autoHide: true,
@@ -106,34 +105,6 @@ const VerificationPage = ({ navigation }: VerificationPageProps) => {
       }, 500);
     }
 
-    // if (data === qrCode) {
-    //   Toast.show({
-    //     type: "success",
-    //     text1: "챌린지 완료!",
-    //     text2: "QR 코드가 일치합니다.",
-    //     position: "bottom",
-    //     visibilityTime: 2000,
-    //     autoHide: true,
-    //   });
-
-    // //   setTimeout(() => {
-    //     setCurrentStep('generate')
-    // //   }, 2000);
-    // } else {
-    //   Toast.show({
-    //     type: "error",
-    //     text1: "QR 코드 불일치",
-    //     text2: `스캔된 값: ${data}`,
-    //     position: "bottom",
-    //     visibilityTime: 2000,
-    //     autoHide: true,
-    //   });
-
-    //   setTimeout(() => {
-    //     setScanned(false);
-    //     //   setCurrrentStep('generate')
-    //   }, 500);
-    // }
   };
 
   useEffect(() => {

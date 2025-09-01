@@ -54,29 +54,6 @@ export const QRCodeScanner: React.FC<QRCodeScannerProps> = ({
           </CameraView>
         </View>
       )}
-
-      {/* {!scanned ? (
-        <View style={styles.scanContainer}>
-          <CameraView
-            style={styles.scanner}
-            facing="back"
-            onBarcodeScanned={onBarcodeScanned}
-            barcodeScannerSettings={{
-              barcodeTypes: ["qr"],
-            }}
-          >
-            <ScanOverlay />
-          </CameraView>
-        </View>
-      ) : (
-        <View style={styles.resultContainer}>
-          <Text style={styles.resultText}>QR 코드 스캔 완료!</Text>
-          <CustomButton text="다시 스캔" onPress={onResetScan} />
-        </View>
-      )} */}
-      {/* <View style={styles.buttonContainer}>
-        <CustomButton text="다음" onPress={onNextStep} />
-      </View> */}
     </View>
   );
 };
