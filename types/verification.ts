@@ -1,5 +1,5 @@
 export interface VerificationRequest {
-  bookingId: string;
+  booking_id: string;
   jwt: string;
 }
 

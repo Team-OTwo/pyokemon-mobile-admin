@@ -5,12 +5,12 @@ interface TimerProps {
   onFinish?: () => void;
 }
 const Timer: React.FC<TimerProps> = ({ onFinish }) => {
-  const [seconds, setSeconds] = useState(3);
+  const [seconds, setSeconds] = useState(180);
 
   useEffect(() => {
     if (seconds <= 0) {
-      //   onFinish?.();
-      //   return;
+        onFinish?.();
+        return;
     }
     const timer = setInterval(() => {
       setSeconds((prev) => prev - 1);

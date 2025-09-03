@@ -1,3 +1,4 @@
+import { postVerification } from "@/api/did/fetchers/post-verification";
 import { useGetVerificationResult } from "@/api/did/queries/use-get-verification-result";
 import Header from "@/components/header";
 import { RootStackParamList } from "@/types/navigation";
@@ -19,8 +20,9 @@ type Step = "scan" | "generate" | "complete";
 const VerificationPage = ({ navigation }: VerificationPageProps) => {
   const [currentStep, setCurrentStep] = useState<Step>("scan");
   const [scanned, setScanned] = useState(false);
-  const [qrCode, setQrCode] = useState("exp://192.168.0.32:8083");
+  const [qrCode, setQrCode] = useState("");
   const [presExId, setPresExId] = useState("");
+  const [bookingId, setBookingId] = useState("");
 
   const [permission, requestPermission] = useCameraPermissions();
 
@@ -58,7 +60,7 @@ const VerificationPage = ({ navigation }: VerificationPageProps) => {
   };
 
   // 사용자 입장 완료할 때까지 polling
-  const { data, isSuccess } = useGetVerificationResult(presExId, {
+  const { data, isSuccess } = useGetVerificationResult(presExId, bookingId, {
     enabled: presExId !== "" && currentStep === "generate",
     refetchInterval: 2000,
   });
@@ -76,21 +78,21 @@ const VerificationPage = ({ navigation }: VerificationPageProps) => {
     console.log("스캔된 데이터:", data);
 
     try {
-      // const parsed = JSON.parse(data);
-      // const { jwt, bookingId } = parsed;
+      const parsed = JSON.parse(data);
+      const { jwt, booking_id } = parsed;
+      setBookingId(booking_id);
 
       // console.log("스캔된 JWT:", jwt);
-      // console.log("스캔된 Booking ID:", bookingId);
-      const jwt = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NTY0MzM4NTcsImV4cCI6MTc1NjQzNTY1N30.P4uMs7TY-EDDM5RU4_6paeaU_fXq-qdJbE6kt7FJjVw";
-      const bookingId = "2";
+      // console.log("스캔된 Booking ID:", booking_id);
       
-      // const res = await postVerification({ jwt, bookingId });
-      // console.log("res" + res);
+      const res = await postVerification({ jwt, booking_id });
+      console.log("res pres ex id: " + res.pres_ex_id);
+      console.log("res verify_invi_url: " + res.verify_invi_url);
 
       // // qr 데이터에 verify_invi_url 담기
-      // setQrCode(res.verify_invi_url);
-      // setPresExId(res.pres_ex_id);
-      setPresExId("2");
+      setQrCode(res.verify_invi_url);
+      setPresExId(res.pres_ex_id);
+      // setPresExId("2");
       setCurrentStep("generate");
     } catch (e) {
       Toast.show({
