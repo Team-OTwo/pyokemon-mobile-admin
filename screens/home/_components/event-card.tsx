@@ -23,7 +23,7 @@ function EventCard({ event, onPress }: EventCardProps) {
     >
       {/* title */}
       <View style={styles.titleContainer}>
-        <Text style={globalStyles.title}>{event.title}</Text>
+        <Text style={[globalStyles.title, styles.title]}>{event.title}</Text>
         <Badge text={dDay}/>
       </View>
 
@@ -62,6 +62,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  title: {
+    width: "75%",
+    wordWrap: "break-word",
   },
   infoContainer: {
     flexDirection: "column",
