@@ -23,8 +23,8 @@ const Timer: React.FC<TimerProps> = ({ onFinish }) => {
   const second = seconds % 60;
   return (
     <View style={styles.textContainer}>
-      <Text style={styles.text}>남은 시간</Text>
-      <Text style={styles.text}>
+      <Text style={styles.text}>남은 시간 :</Text>
+      <Text style={styles.timer}>
         {minute}:{second.toString().padStart(2, "0")}
       </Text>
     </View>
@@ -34,11 +34,18 @@ const Timer: React.FC<TimerProps> = ({ onFinish }) => {
 const styles = StyleSheet.create({
   textContainer: {
     flexDirection: "row",
-    gap: 12,
+    gap: 8,
   },
   text: {
     color: Colors.gray500,
+    textAlign:'center',
   },
+  timer:{
+    color:Colors.error,
+    width:40,
+    textAlign:'center',
+    fontWeight:600
+  }
 });
 
 export default Timer;
