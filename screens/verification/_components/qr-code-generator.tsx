@@ -25,7 +25,7 @@ export const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({
         QR을 스캔하면 입장이 완료됩니다.
       </Text>
     <Timer onFinish={onGoBack}/>
-      <QRCode value={qrCode} size={200} />
+      <QRCode value={qrCode} size={300} ecl="L"/>
       
       <Text style={styles.subtext}>
         QR은 3분간 유효합니다.
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    gap: 32,
+    gap: 20,
     paddingHorizontal: 20,
     position:'relative',
   },
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginTop: 56,
+    marginTop: 48,
   },
   text: {
     textAlign: "center",
