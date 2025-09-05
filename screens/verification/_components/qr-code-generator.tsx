@@ -5,17 +5,27 @@ import { StyleSheet, Text, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import Timer from "./timer";
 
+type Step = "scan" | "generate" | "complete";
+
 interface QRCodeGeneratorProps {
   qrCode: string;
   onGoBack: () => void;
   presExId: string;
+  setCurrentStep: (step:Step)=>void;
 }
+
 
 export const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({
   qrCode,
   onGoBack,
+  setCurrentStep
 }) => {
   console.log("qrcode: " + qrCode);
+
+  // 임시 성공 처리
+  setInterval(()=>{
+    setCurrentStep('complete');
+  },5000);
 
   return (
     <View style={styles.container}>

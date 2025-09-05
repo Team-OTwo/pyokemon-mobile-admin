@@ -18,9 +18,9 @@ interface VerificationPageProps {
 type Step = "scan" | "generate" | "complete";
 
 const VerificationPage = ({ navigation }: VerificationPageProps) => {
-  const [currentStep, setCurrentStep] = useState<Step>("scan");
+  const [currentStep, setCurrentStep] = useState<Step>("generate");
   const [scanned, setScanned] = useState(false);
-  const [qrCode, setQrCode] = useState("");
+  const [qrCode, setQrCode] = useState("eyJ0eXAiOiJKV1QiLCJhbGciOiJFZERTQSIsImtpZCI6ImRpZDprZXk6ejZNa25QTEtOaGdvRVJjQ1hVb2RiSnprRnhHWVlSSHVlN0cxVlQzS3Rkcm9FOWlpI3o2TWtuUExLTmhnb0VSY0NYVW9kYkp6a0Z4R1lZUkh1ZTdHMVZUM0t0ZHJvRTlpaSJ9.eyJkaWQiOiJkaWQ6a2V5Ono2TWtuUExLTmhnb0VSY0NYVW9kYkp6a0Z4R1lZUkh1ZTdHMVZUM0t0ZHJvRTlpaSJ9.Vfg94KSd8qOjTq87YpZNfbU9lJeWrvvOnruptjtLWBvGejNRw28gjOA_WvIPK9VB3KejaK05LB4FXNf_Kb2iCw");
   const [presExId, setPresExId] = useState("");
   const [bookingId, setBookingId] = useState("");
 
@@ -139,6 +139,7 @@ const VerificationPage = ({ navigation }: VerificationPageProps) => {
         setScanned(false);
       }}
       presExId={presExId}
+      setCurrentStep={setCurrentStep}
     />
   );
 
