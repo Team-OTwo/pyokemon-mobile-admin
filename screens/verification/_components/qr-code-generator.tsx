@@ -1,27 +1,37 @@
 import CustomButton from "@/components/ui/button";
+import { Colors } from "@/constants/Colors";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
+import Timer from "./timer";
 
 interface QRCodeGeneratorProps {
   qrCode: string;
-  onNextStep: () => void;
+  onGoBack: () => void;
+  presExId: string;
 }
 
 export const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({
   qrCode,
-  onNextStep,
+  onGoBack,
 }) => {
+  console.log("qrcode: " + qrCode);
+
   return (
     <View style={styles.container}>
       <Text style={styles.stepTitle}>관람객에게 QR을 제시해주세요</Text>
-      <QRCode value={qrCode} size={200} />
+      
       <Text style={styles.text}>
-        스캔이 완료되면 입장티켓 스캔 화면으로 넘어갑니다.
+        QR을 스캔하면 입장이 완료됩니다.
       </Text>
-      {/* <Text style={styles.qrValue}>QR 값: {qrCode}</Text> */}
+    <Timer onFinish={onGoBack}/>
+      <QRCode value={qrCode} size={300} ecl="L"/>
+      
+      <Text style={styles.subtext}>
+        QR은 3분간 유효합니다.
+      </Text>
       <View style={styles.buttonContainer}>
-        <CustomButton text="다음" onPress={onNextStep} />
+        <CustomButton text="이전" onPress={onGoBack} />
       </View>
     </View>
   );
@@ -30,16 +40,16 @@ export const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center",
-    gap: 32,
+    gap: 20,
     paddingHorizontal: 20,
+    position:'relative',
   },
   stepTitle: {
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: 20
+    marginTop: 48,
   },
   text: {
     textAlign: "center",
@@ -56,5 +66,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: "100%",
+    position: "absolute",
+    bottom: 80,
   },
+  subtext:{
+    color:Colors.gray500
+  }
 });

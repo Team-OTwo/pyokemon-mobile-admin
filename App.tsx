@@ -10,12 +10,12 @@ import { StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast, { BaseToast } from "react-native-toast-message";
 import { Colors } from "./constants/Colors";
-import ChallengeQrPage from "./screens/challenge-qr/challenge-qr-page";
 import DetailPage from "./screens/detail/detail-page";
 import HomePage from "./screens/home/home-page";
 import MyPage from "./screens/my-page/my-page";
 import ScanLogPage from "./screens/scan-log/scan-log-page";
 import SplashPage from "./screens/splash/splash-page";
+import VerificationPage from "./screens/verification/verification-page";
 import { RootStackParamList } from "./types/navigation";
 
 
@@ -85,7 +85,7 @@ export default function App() {
               <Stack.Screen name="MyPage" component={MyPage} />
               <Stack.Screen name="Detail" component={DetailPage} />
               <Stack.Screen name="ScanLog" component={ScanLogPage} />
-              <Stack.Screen name="ChallengeQr" component={ChallengeQrPage} />
+              <Stack.Screen name="Verification" component={VerificationPage} />
             </Stack.Navigator>
           </NavigationContainer>
           <Toast config={toastConfig} />

@@ -8,6 +8,7 @@ interface ButtonProps {
   borderColor?: string;
   backgroundColor?: string;
   onPress?: () => void;
+  disabled?:boolean
 }
 
 const CustomButton = ({
@@ -17,11 +18,21 @@ const CustomButton = ({
   borderColor = "#75B8FF",
   backgroundColor = "#75B8FF",
   onPress,
+  disabled
 }: ButtonProps) => {
   return (
     <TouchableOpacity
-      style={[style, styles.button, { borderColor: borderColor, backgroundColor: backgroundColor }]}
+      style={[
+        style,
+        styles.button,
+        {
+          borderColor: borderColor,
+          backgroundColor: backgroundColor,
+          opacity: disabled ? 0.3 : 1,
+        },
+      ]}
       onPress={onPress}
+      disabled={disabled}
     >
       <Text style={[styles.text, { color: textColor }]}>{text}</Text>
     </TouchableOpacity>

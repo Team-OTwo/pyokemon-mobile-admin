@@ -4,7 +4,7 @@ const ENV: Environment = (process.env.EXPO_PUBLIC_ENVIRONMENT as Environment) ||
 
 // 게이트웨이 URL 상수
 const GATEWAY_URL: Record<Environment, string> = {
-  local: "http://192.168.0.29:8087",
+  local: "http://192.168.0.32:8087",
   dev: "https://pyokemon.synology.me:8087",
 }
 
@@ -26,7 +26,12 @@ const PAYMENT_API_URL: Record<Environment, string> = {
 
 const BOOKING_API_URL: Record<Environment, string> = {
   local: `${GATEWAY_URL.local}/booking`,
-  dev: `${GATEWAY_URL.dev}/payment`,
+  dev: `${GATEWAY_URL.dev}/booking`,
+}
+
+const DID_API_URL: Record<Environment, string> = {
+  local: `${GATEWAY_URL.local}/did`,
+  dev: `${GATEWAY_URL.dev}/did`,
 }
 
 
@@ -35,6 +40,7 @@ export const getEventApiUrl = () => EVENT_API_URL[ENV]
 export const getAccountApiUrl = () => ACCOUNT_API_URL[ENV]
 export const getPaymentApiUrl = () => PAYMENT_API_URL[ENV]
 export const getBookingApiUrl = () => BOOKING_API_URL[ENV]
+export const getDidApiUrl = () => DID_API_URL[ENV]
 
 export default {
   ENV,
@@ -43,9 +49,11 @@ export default {
   ACCOUNT_API_URL,
   PAYMENT_API_URL,
   BOOKING_API_URL,
+  DID_API_URL,
   getGatewayUrl,
   getEventApiUrl,
   getAccountApiUrl,
   getPaymentApiUrl,
   getBookingApiUrl,
+  getDidApiUrl
 }

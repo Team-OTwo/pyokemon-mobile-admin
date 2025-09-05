@@ -18,12 +18,12 @@ function EventCard({ event, onPress }: EventCardProps) {
   const dDay = getDDay(new Date(event.eventDate));
   return (
     <TouchableOpacity
-      style={[styles.container]}
+      style={styles.container}
       onPress={() => onPress && onPress(event)}
     >
       {/* title */}
       <View style={styles.titleContainer}>
-        <Text style={globalStyles.title}>{event.title}</Text>
+        <Text style={[globalStyles.title, styles.title]}>{event.title}</Text>
         <Badge text={dDay}/>
       </View>
 
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 12,
     shadowColor: "#222",
+    shadowOffset: { width: 0, height: 0 },
     shadowRadius: 5,
     shadowOpacity: 0.08,
     elevation: 4,
@@ -61,6 +62,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  title: {
+    width: "75%",
+    wordWrap: "break-word",
   },
   infoContainer: {
     flexDirection: "column",

@@ -9,7 +9,7 @@ import { globalStyles } from "@/globalStyles";
 import { RootStackParamList } from "@/types/navigation";
 import { RouteProp } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { format } from "date-fns";
+import { format, isToday } from "date-fns";
 import { ko } from "date-fns/locale";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
@@ -28,8 +28,10 @@ function DetailPage({ route, navigation }: DetailPageProps) {
     error,
   } = useGetEventDetailQuery(Number(eventId));
 
+  
+
   const handleQrButtonPress = () => {
-    navigation.navigate("ChallengeQr");
+    navigation.navigate("Verification");
   };
 
   if (isLoading) {
@@ -39,6 +41,9 @@ function DetailPage({ route, navigation }: DetailPageProps) {
   if (error || !event) {
     return <Error />;
   }
+
+  // 오늘 날짜만 입장 받기
+  const disabled = !isToday(event.eventDate);
 
   return (
     <View style={styles.screen}>
@@ -80,7 +85,7 @@ function DetailPage({ route, navigation }: DetailPageProps) {
         </View>
       </View>
       <View style={styles.qrButton}>
-        <CustomButton text="입장 QR 생성" onPress={handleQrButtonPress} />
+        <CustomButton text="입장 시작" onPress={handleQrButtonPress} disabled={disabled}/>
       </View>
     </View>
   );
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
   qrButton: {
     position: "absolute",
     padding: 16,
-    bottom: 0,
+    bottom: 24,
     gap: 12,
     width: "100%",
   },

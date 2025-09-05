@@ -1,3 +1,5 @@
+import { postVerification } from "@/api/did/fetchers/post-verification";
+import { useGetVerificationResult } from "@/api/did/queries/use-get-verification-result";
 import Header from "@/components/header";
 import { RootStackParamList } from "@/types/navigation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -9,16 +11,18 @@ import { ChallengeComplete } from "./_components/challenge-complete";
 import { QRCodeGenerator } from "./_components/qr-code-generator";
 import { QRCodeScanner } from "./_components/qr-code-scanner";
 
-interface ChallengeQrPageProps {
-  navigation: NativeStackNavigationProp<RootStackParamList, "ChallengeQr">;
+interface VerificationPageProps {
+  navigation: NativeStackNavigationProp<RootStackParamList, "Verification">;
 }
 
-type Step = "generate" | "scan" | "complete";
+type Step = "scan" | "generate" | "complete";
 
-function ChallengeQrPage({ navigation }: ChallengeQrPageProps) {
-  const [currentStep, setCurrentStep] = useState<Step>("generate");
+const VerificationPage = ({ navigation }: VerificationPageProps) => {
+  const [currentStep, setCurrentStep] = useState<Step>("scan");
   const [scanned, setScanned] = useState(false);
-  const [qrCode, setQrCode] = useState("challenge_123_test");
+  const [qrCode, setQrCode] = useState("");
+  const [presExId, setPresExId] = useState("");
+  const [bookingId, setBookingId] = useState("");
 
   const [permission, requestPermission] = useCameraPermissions();
 
@@ -55,71 +59,101 @@ function ChallengeQrPage({ navigation }: ChallengeQrPageProps) {
     }
   };
 
-  const handleBarCodeScanned = ({ type, data }: { type: string; data: string }) => {
+  // 사용자 입장 완료할 때까지 polling
+  const { data, isSuccess } = useGetVerificationResult(presExId, bookingId, {
+    enabled: presExId !== "" && currentStep === "generate",
+    refetchInterval: 2000,
+  });
+
+  // qr 스캔 후
+  const handleBarCodeScanned = async ({
+    data,
+  }: {
+    type: string;
+    data: string;
+  }) => {
     if (scanned) return;
 
     setScanned(true);
     console.log("스캔된 데이터:", data);
 
-    if (data === qrCode) {
+    try {
+      const parsed = JSON.parse(data);
+      const { jwt, booking_id } = parsed;
+      setBookingId(booking_id);
+
+      // console.log("스캔된 JWT:", jwt);
+      // console.log("스캔된 Booking ID:", booking_id);
+      
+      const res = await postVerification({ jwt, booking_id });
+      console.log("res pres ex id: " + res.pres_ex_id);
+      console.log("res verify_invi_url: " + res.verify_invi_url);
+
+      // // qr 데이터에 verify_invi_url 담기
+      setQrCode(res.verify_invi_url);
+      setPresExId(res.pres_ex_id);
+      // setPresExId("2");
+      setCurrentStep("generate");
+    } catch (e) {
       Toast.show({
-        type: "success",
-        text1: "챌린지 완료!",
-        text2: "QR 코드가 일치합니다.",
+        type: "error",
+        text1: "QR 코드 불일치",
         position: "bottom",
         visibilityTime: 2000,
         autoHide: true,
       });
 
       setTimeout(() => {
-        setCurrentStep("complete");
-      }, 2000);
-    } else {
-      Toast.show({
-        type: "error",
-        text1: "QR 코드 불일치",
-        text2: `스캔된 값: ${data}`,
-        position: "bottom",
-        visibilityTime: 3000,
-        autoHide: true,
-      });
-
-      setTimeout(() => {
         setScanned(false);
-      }, 3000);
+      }, 500);
     }
+
   };
 
-  const resetToGenerate = () => {
-    setCurrentStep("generate");
+  useEffect(() => {
+    if (isSuccess) {
+      setCurrentStep("complete");
+    }
+  }, [isSuccess]);
+
+  const resetToScan = () => {
+    setCurrentStep("scan");
     setScanned(false);
   };
-
-  const renderGenerateStep = () => <QRCodeGenerator qrCode={qrCode} onNextStep={() => setCurrentStep("scan")} />;
 
   const renderScanStep = () => (
     <QRCodeScanner
       permission={permission}
       scanned={scanned}
       onRequestPermission={requestPermissionAgain}
-      onGoBack={() => setCurrentStep("generate")}
+      onGoBack={() => setCurrentStep("scan")}
       onBarcodeScanned={handleBarCodeScanned}
-      onResetScan={() => setScanned(false)}
     />
   );
 
-  const renderCompleteStep = () => <ChallengeComplete onReset={resetToGenerate} />;
+  const renderGenerateStep = () => (
+    <QRCodeGenerator
+      qrCode={qrCode}
+      onGoBack={() => {
+        setCurrentStep("scan");
+        setScanned(false);
+      }}
+      presExId={presExId}
+    />
+  );
+
+  const renderCompleteStep = () => <ChallengeComplete onReset={resetToScan} />;
 
   const renderCurrentStep = () => {
     switch (currentStep) {
-      case "generate":
-        return renderGenerateStep();
       case "scan":
         return renderScanStep();
+      case "generate":
+        return renderGenerateStep();
       case "complete":
         return renderCompleteStep();
       default:
-        return renderGenerateStep();
+        return renderScanStep();
     }
   };
 
@@ -129,12 +163,13 @@ function ChallengeQrPage({ navigation }: ChallengeQrPageProps) {
       {renderCurrentStep()}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    position: "relative",
   },
 });
 
-export default ChallengeQrPage;
+export default VerificationPage;
